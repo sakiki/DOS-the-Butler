@@ -1,0 +1,1409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<!--
+	Copyright (c) 1999-2008 by Digital Mars
+	All Rights Reserved
+	Written by Walter Bright
+	www.digitalmars.com
+  -->
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" >
+<title>std.algorithm - D Programming Language - Digital Mars</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script>
+function listanchors()
+{
+    var a = document.getElementById("quickindex");
+    if (!a) return;
+    var newText = "";
+    var hash = new Array;
+    // List all anchors.
+    for (var i = 0; i < document.anchors.length; i++)
+    {
+        var a = document.anchors[i];
+        var text = a.name;
+        if (hash[text] > 0) continue;
+        hash[text] = 1;
+        newText += '<a href="#' + a.name + '"><span class="d_psymbol">'
+                + a.name + '</span></a> ';
+    }
+    if (newText != "") newText = "<p><b>Jump to:</b> " + newText + '</p>';
+    var a = document.getElementById("quickindex");
+    a.innerHTML = newText;
+}
+</script>
+
+</head>
+
+<body onload="listanchors()">
+<div id="heading">
+	<a href="http://www.digitalmars.com/"><img src="../dmlogo.gif" width="270" height="53" border="0" alt="www.digitalmars.com" align="left"></a>
+	<p align="right">D Programming Language 2.0</p>
+
+
+	<div id="headingNav">
+	<ul>	<li><a href="http://www.prowiki.org/wiki4d/wiki.cgi?DocComments/Phobos/StdAlgorithm" title="Read/write comments and feedback">Comments</a></li>
+	<li><a href="../index.html" title="D Programming Language" class="dlink">D</a></li>
+	<li><a href="http://www.digitalmars.com/advancedsearch.html" title="Search Digital Mars web site">Search</a></li>
+	<li><a href="http://www.digitalmars.com/" title="www.digitalmars.com">Home</a></li>
+	</ul>
+	</div>
+
+	<div id="lastupdate">Last update Thu Mar  6 15:45:39 2008
+</div>
+</div>
+
+
+
+<div id="navigation">
+    
+<div class="navblock">
+<form method="get" action="http://www.google.com/search">
+<div id="searchbox">
+<input id="q" name="q" size="10" value="RTL Search" onFocus='if(this.value == "RTL Search"){this.value="";}'>
+<input type="hidden" id="domains" name="domains" value="www.digitalmars.com">
+<input type="hidden" id="sitesearch" name="sitesearch" value="www.digitalmars.com/d/2.0/phobos">
+<input type="hidden" id="sourceid" name="sourceid" value="google-search">
+<input type="submit" id="submit" name="submit" value="Go">
+</div>
+</form>
+<div id="toctop">
+    <ul>	<li><a href="../index.html" title="D Programming Language">D</a></li>
+	<li><a href="../lex.html" title="D Language Specification">Language</a></li>
+	<li><a href="phobos.html" title="D Runtime Library">Phobos</a></li>
+	<li><a href="../comparison.html" title="Language Comparisons">Comparisons</a></li>
+    </ul>
+</div>
+</div>
+
+    
+<div class="navblock">
+    <ul>	<li><a href="object.html" title="root of object hierarchy">object</a></li>
+    </ul>
+    <h2><a href="phobos.html#std" title="D standard modules">std</a></h2>
+    <ul>	<li><a href="std_algorithm.html" title="General-purpose algorithms">std.algorithm</a></li>
+	<li><a href="std_base64.html" title="Encode/decode base64 format">std.base64</a></li>
+	<li><a href="std_bind.html" title="Function argument binding">std.bind</a></li>
+	<li><a href="std_bitarray.html" title="Arrays of bits">std.bitarray</a></li>
+	<li><a href="std_bitmanip.html" title="Bit-level manipulation">std.bitmanip</a></li>
+	<li><a href="std_boxer.html" title="Box/unbox types">std.boxer</a></li>
+	<li><a href="std_compiler.html" title="Information about the D compiler implementation">std.compiler</a></li>
+	<li><a href="std_complex.html" title="Complex numbers">std.complex</a></li>
+	<li><a href="std_contracts.html" title="Think assert">std.contracts</a></li>
+	<li><a href="std_conv.html" title="Conversion of strings to integers">std.conv</a></li>
+	<li><a href="std_cover.html" title="D coverage analyzer">std.cover</a></li>
+	<li><a href="std_cpuid.html" title="CPU identification">std.cpuid</a></li>
+	<li><a href="std_ctype.html" title="Simple character classification">std.ctype</a></li>
+	<li><a href="std_date.html" title="Date and time functions">std.date</a></li>
+	<li><a href="std_demangle.html" title="Demangle D names">std.demangle</a></li>
+	<li><a href="std_file.html" title="Basic file operations">std.file</a></li>
+	<li><a href="std_format.html" title="Formatted conversions of values to strings">std.format</a></li>
+	<li><a href="std_functional.html" title="functional">std.functional</a></li>
+	<li><a href="std_gc.html" title="Control the garbage collector">std.gc</a></li>
+	<li><a href="std_getopt.html" title="Command line options">std.getopt</a></li>
+	<li><a href="std_intrinsic.html" title="Compiler built in intrinsic functions">std.intrinsic</a></li>
+	<li><a href="std_iterator.html" title="Defines iterators and ranges">std.iterator</a></li>
+	<li><a href="std_math.html" title="the usual math functions">std.math</a></li>
+	<li><a href="std_md5.html" title="Compute MD5 digests">std.md5</a></li>
+	<li><a href="std_metastrings.html" title="Metaprogramming with strings">std.metastrings</a></li>
+	<li><a href="std_mmfile.html" title="Memory mapped files">std.mmfile</a></li>
+	<li><a href="std_numeric.html" title="Numeric algorithms">std.numeric</a></li>
+	<li><a href="std_openrj.html" title="Basic database">std.openrj</a></li>
+	<li><a href="std_outbuffer.html" title="Assemble data into an array of bytes">std.outbuffer</a></li>
+	<li><a href="std_outofmemory.html" title="Out of memory exception">std.outofmemory</a></li>
+	<li><a href="std_path.html" title="Manipulate file names, path names, etc.">std.path</a></li>
+	<li><a href="std_process.html" title="Create/destroy threads">std.process</a></li>
+	<li><a href="std_random.html" title="Random number generation">std.random</a></li>
+	<li><a href="std_regexp.html" title="regular expressions">std.regexp</a></li>
+	<li><a href="std_signals.html" title="Signals">std.signals</a></li>
+	<li><a href="std_socket.html" title="Sockets">std.socket</a></li>
+	<li><a href="std_socketstream.html" title="Stream for a blocking, connected Socket">std.socketstream</a></li>
+	<li><a href="std_stdint.html" title="Integral types for various purposes">std.stdint</a></li>
+	<li><a href="std_stdio.html" title="Standard I/O">std.stdio</a></li>
+	<li><a href="std_cstream.html" title="Stream I/O">std.cstream</a></li>
+	<li><a href="std_stream.html" title="Stream I/O">std.stream</a></li>
+	<li><a href="std_string.html" title="Basic string operations">std.string</a></li>
+	<li><a href="std_system.html" title="Inquire about the CPU, operating system">std.system</a></li>
+	<li><a href="std_thread.html" title="Thread operations">std.thread</a></li>
+	<li><a href="std_traits.html" title="Type traits">std.traits</a></li>
+	<li><a href="std_typecons.html" title="Type constructors">std.typecons</a></li>
+	<li><a href="std_typetuple.html" title="Type tuples">std.typetuple</a></li>
+	<li><a href="std_uni.html" title="Unicode classification">std.uni</a></li>
+	<li><a href="std_uri.html" title="Encode and decode Uniform Resource Identifiers (URIs)">std.uri</a></li>
+	<li><a href="std_utf.html" title="Encode and decode utf character encodings">std.utf</a></li>
+	<li><a href="std_variant.html" title="Stores all types in a uniform, dynamically-checked representation">std.variant</a></li>
+	<li><a href="std_xml.html" title="XML file processing">std.xml</a></li>
+	<li><a href="std_zip.html" title="Read/write zip archives">std.zip</a></li>
+	<li><a href="std_zlib.html" title="Compression / Decompression of data">std.zlib</a></li>
+	<li><a href="std_c_fenv.html" title="Floating point environment">std.c.fenv</a></li>
+	<li><a href="std_c_locale.html" title="Locale">std.c.locale</a></li>
+	<li><a href="std_c_math.html" title="Math">std.c.math</a></li>
+	<li><a href="std_c_process.html" title="Process">std.c.process</a></li>
+	<li><a href="std_c_stdarg.html" title="Variadic arguments">std.c.stdarg</a></li>
+	<li><a href="std_c_stddef.html" title="Standard definitions">std.c.stddef</a></li>
+	<li><a href="std_c_stdio.html" title="Standard I/O">std.c.stdio</a></li>
+	<li><a href="std_c_stdlib.html" title="Standard library">std.c.stdlib</a></li>
+	<li><a href="std_c_string.html" title="Strings">std.c.string</a></li>
+	<li><a href="std_c_time.html" title="Time">std.c.time</a></li>
+	<li><a href="std_c_wcharh.html" title="Wide characters">std.c.wcharh</a></li>
+	<li><a href="std_windows_charset.html" title="Conversion to/from Windows character sets">std.windows.charset</a></li>
+	<li><a href="phobos.html#std_windows" title="Modules specific to Windows">std.windows</a></li>
+	<li><a href="phobos.html#std_linux" title="Modules specific to Windows">std.linux</a></li>
+	<li><a href="phobos.html#std_c_windows" title="C Windows API">std.c.windows</a></li>
+	<li><a href="phobos.html#std_c_linux" title="C Linux API">std.c.linux</a></li>
+    </ul>
+</div>
+
+</div>
+<div id="content">
+    <h1>std.algorithm</h1>
+    <div id=quickindex class=quickindex></div>
+    <!-- Generated by Ddoc from std\algorithm.d -->
+Implements algorithms oriented mainly towards processing of
+sequences. Some functions are semantic equivalents or supersets of
+those found in the <span class="d_psymbol"><i><a name="algorithm"></a><u>algorithm</u></i></span> header in <a href="http://sgi.com/tech/stl/">Alexander Stepanov's Standard Template Library</a> for C++.
+<br><br>
+<b>Author:</b><br>
+<a href="http://erdani.org">Andrei Alexandrescu</a>
+
+<br><br>
+<b>Note:</b><br>
+Many functions in this module are parameterized with a function or a
+<a href="../2.0/glossary.html#predicate">predicate</a>
+. The predicate may be passed either as a
+function name, a delegate name, a <a href="../2.0/glossary.html#functor">functor</a>
+ name, or a
+compile-time string. The string may consist of <b>any</b> legal D
+expression that uses the symbol <span class="d_psymbol"><i>a</i></span> (for unary functions) or the
+symbols <span class="d_psymbol"><i>a</i></span> and <span class="d_psymbol"><i>b</i></span> (for binary functions). These names will NOT
+interfere with other homonym symbols in user code because they are
+evaluated in a different context. The default for all binary
+comparison predicates is <span class="d_psymbol"><i>"a == b"</i></span> for unordered operations and
+<span class="d_psymbol"><i>"a &lt; b"</i></span> for ordered operations.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = ...;
+<span class="d_keyword">static</span> <span class="d_keyword">bool</span> greater(<span class="d_keyword">int</span> a, <span class="d_keyword">int</span> b)
+{
+    <span class="d_keyword">return</span> a &gt; b;
+}
+sort!(greater)(a);  <span class="d_comment">// predicate as alias
+</span>sort!(<span class="d_string">"a &gt; b"</span>)(a);  <span class="d_comment">// predicate as string
+</span>                    <span class="d_comment">// (no ambiguity with array name)
+</span>sort(a);            <span class="d_comment">// no predicate, "a &lt; b" is implicit
+</span></pre>
+
+Some functions are additionally parameterized with primitives such as
+<span class="d_psymbol"><i>move</i></span> (defaulting to <a href=std_algorithm.html#move>std.algorithm.move</a>
+
+) or <span class="d_psymbol"><i>iterSwap</i></span>
+primitive (defaulting to <a href=std_algorithm.html#iterSwap>std.algorithm.iterSwap</a>
+
+). These
+parameters distill the way in which data is manipulated, and the
+algorithms guarantee they only use them to touch values. There is
+sometimes a need to override that default behavior. Possible uses
+include notifying observers, counting the number of operations, or
+manipulating multiple collections in lockstep.
+
+<br><br>
+
+<dl><dt><div class="d_decl">Ranges[0] <a name="map"></a><u>map</u>(string fun,Ranges...)(Ranges <i>rs</i>);
+<br>Ranges[0] <a name="map"></a><u>map</u>(alias fun,Ranges...)(Ranges <i>rs</i>);
+</div></dt>
+<dd>Implements the homonym function (also known as <span class="d_psymbol"><i>transform</i></span>) present
+in many languages of functional flavor. The call <span class="d_psymbol"><i><a name="map"></a><u>map</u>!(fun)(range1,
+range2, ..., rangeN)</i></span> returns a new range of which elements are
+obtained by applying <span class="d_psymbol"><i>fun(x)</i></span> left to right for all <span class="d_psymbol"><i>x</i></span> in <span class="d_psymbol"><i>range1</i></span>, then all <span class="d_psymbol"><i>x</i></span> in <span class="d_psymbol"><i>range2</i></span>, ..., all <span class="d_psymbol"><i>x</i></span> in <span class="d_psymbol"><i>rangeN</i></span>. The original ranges are not changed.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] arr1 = [ 1, 2, 3, 4 ];
+<span class="d_keyword">int</span>[] arr2 = [ 5, 6 ];
+<span class="d_keyword">auto</span> squares = <span class="d_psymbol">map</span>!(<span class="d_string">"a * a"</span>)(arr1, arr2);
+<span class="d_keyword">assert</span>(squares == [ 1, 4, 9, 16, 25, 36 ]);
+</pre>
+
+In all cases, the type of the result is the same as of the type of the
+first range passed in. If a different type of range is needed, just
+supply an empty range of the needed type as the first argument.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">short</span>[] arr = [ 1, 2 ];
+<span class="d_keyword">auto</span> squares = <span class="d_psymbol">map</span>!(<span class="d_string">"a * a"</span>)(<span class="d_keyword">cast</span>(<span class="d_keyword">int</span>[]) <span class="d_keyword">null</span>, arr);
+<span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(squares) == <span class="d_keyword">int</span>[]));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">template <a name="reduce"></a><u>reduce</u>(F...)</div></dt>
+<dd>Implements the homonym function (also known as <span class="d_psymbol"><i>accumulate</i></span>, <span class="d_psymbol"><i>compress</i></span>, <span class="d_psymbol"><i>inject</i></span>, or <span class="d_psymbol"><i>foldl</i></span>) present in various programming
+languages of functional flavor. The call <span class="d_psymbol"><i><a name="reduce"></a><u>reduce</u>!(fun)(seed,
+range)</i></span> first assigns <span class="d_psymbol"><i>seed</i></span> to an internal variable <span class="d_psymbol"><i>result</i></span>,
+also called the accumulator. Then, for each element <span class="d_psymbol"><i>x</i></span> in <span class="d_psymbol"><i>range</i></span>, <span class="d_psymbol"><i>result = fun(result, x)</i></span> gets evaluated. Finally, <span class="d_psymbol"><i>result</i></span> is returned. Many aggregate range operations turn out to be
+solved with <span class="d_psymbol"><i><a name="reduce"></a><u>reduce</u></i></span> quickly and easily. The example below
+illustrates <span class="d_psymbol"><i><a name="reduce"></a><u>reduce</u></i></span>'s remarkable power and flexibility.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] arr = [ 1, 2, 3, 4, 5 ];
+<span class="d_comment">// Sum all elements
+</span><span class="d_keyword">auto</span> sum = <span class="d_psymbol">reduce</span>!(<span class="d_string">"a + b"</span>)(0, arr);
+<span class="d_keyword">assert</span>(sum == 15);
+
+<span class="d_comment">// Compute the maximum of all elements
+</span><span class="d_keyword">auto</span> largest = <span class="d_psymbol">reduce</span>!(max)(arr[0], arr[1 .. $]);
+<span class="d_keyword">assert</span>(largest == 5);
+
+<span class="d_comment">// Compute the number of odd elements
+</span><span class="d_keyword">auto</span> odds = <span class="d_psymbol">reduce</span>!(<span class="d_string">"a + (b &amp; 1)"</span>)(0, arr);
+<span class="d_keyword">assert</span>(odds == 3);
+
+<span class="d_comment">// Compute the sum of squares
+</span><span class="d_keyword">auto</span> ssquares = <span class="d_psymbol">reduce</span>!(<span class="d_string">"a + b * b"</span>)(0, arr);
+<span class="d_keyword">assert</span>(ssquares == 55);
+</pre>
+
+<b>Multiple ranges:</b><br> It is possible to pass any number
+of ranges to <span class="d_psymbol"><i><a name="reduce"></a><u>reduce</u></i></span>, as in <span class="d_psymbol"><i><a name="reduce"></a><u>reduce</u>!(fun)(seed, range1, range2,
+range3)</i></span>. Then <span class="d_psymbol"><i><a name="reduce"></a><u>reduce</u></i></span> will simply apply its algorithm in
+succession to each range, from left to right.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 3, 4 ];
+<span class="d_keyword">int</span>[] b = [ 100 ];
+<span class="d_keyword">auto</span> r = <span class="d_psymbol">reduce</span>!(<span class="d_string">"a + b"</span>)(0, a, b);
+<span class="d_keyword">assert</span>(r == 107);
+
+<span class="d_comment">// Mixing convertible types is fair game, too
+</span><span class="d_keyword">double</span>[] c = [ 2.5, 3.0 ];
+<span class="d_keyword">auto</span> r1 = <span class="d_psymbol">reduce</span>!(<span class="d_string">"a + b"</span>)(0.0, a, b, c);
+<span class="d_keyword">assert</span>(r1 == 112.5);
+</pre>
+
+<b>Multiple functions:</b><br> Sometimes it is very useful to
+compute multiple aggregates in one pass. One advantage is that the
+computation is faster because the looping overhead is shared. That's
+why <span class="d_psymbol"><i><a name="reduce"></a><u>reduce</u></i></span> accepts multiple functions. If two or more functions
+are passed, <span class="d_psymbol"><i><a name="reduce"></a><u>reduce</u></i></span> returns a <a href=std_typecons.html#Tuple>std.typecons.Tuple</a>
+
+ object with
+one member per passed-in function. The number of seeds must be
+correspondingly increased.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">double</span>[] a = [ 3.0, 4, 7, 11, 3, 2, 5 ];
+<span class="d_comment">// Compute minimum and maximum in one pass
+</span><span class="d_keyword">auto</span> r = <span class="d_psymbol">reduce</span>!(min, max)(<span class="d_keyword">double</span>.max, -<span class="d_keyword">double</span>.max, a);
+<span class="d_comment">// The type of r is Tuple!(double, double)
+</span><span class="d_keyword">assert</span>(r._0 == 2);  <span class="d_comment">// minimum
+</span><span class="d_keyword">assert</span>(r._1 == 11); <span class="d_comment">// maximum
+</span>
+<span class="d_comment">// Compute sum and sum of squares in one pass
+</span>r = <span class="d_psymbol">reduce</span>!(<span class="d_string">"a + b"</span>, <span class="d_string">"a + b * b"</span>)(0.0, 0.0, a);
+<span class="d_keyword">assert</span>(r._0 == 35);  <span class="d_comment">// sum
+</span><span class="d_keyword">assert</span>(r._1 == 233); <span class="d_comment">// sum of squares
+</span><span class="d_comment">// Compute average and standard deviation from the above
+</span><span class="d_keyword">auto</span> avg = r._0 / a.length;
+<span class="d_keyword">auto</span> stdev = sqrt(r._1 / a.length - avg * avg);
+</pre>
+
+<b>Multiple ranges and functions:</b><br> The most general form
+of <span class="d_psymbol"><i><a name="reduce"></a><u>reduce</u></i></span> accepts multiple functions and multiple ranges
+simultaneously. The call <span class="d_psymbol"><i><a name="reduce"></a><u>reduce</u>!(fun1, ..., funN)(seed1, ...,
+seedN, range1, ..., rangeM)</i></span> applies the reduction algorithm for all
+functions and all ranges.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 3, 4, 7, 11, 3, 2, 5 ];
+<span class="d_keyword">double</span>[] b = [ 2.5, 4, -4.5, 2, 10.9 ];
+<span class="d_comment">// Compute minimum and maximum in one pass over a and b
+</span><span class="d_keyword">auto</span> r = <span class="d_psymbol">reduce</span>!(min, max)(<span class="d_keyword">double</span>.max, -<span class="d_keyword">double</span>.max, a, b);
+<span class="d_keyword">assert</span>(r._0 == -4.5);  <span class="d_comment">// minimum
+</span><span class="d_keyword">assert</span>(r._1 == 11);    <span class="d_comment">// maximum
+</span></pre>
+<br><br>
+
+<dl></dl>
+</dd>
+<dt><div class="d_decl">Ranges[0] <a name="filter"></a><u>filter</u>(alias pred,Ranges...)(Ranges <i>rs</i>);
+</div></dt>
+<dd>Implements the homonym function present in various programming
+languages of functional flavor. The call <span class="d_psymbol"><i><a name="filter"></a><u>filter</u>!(fun)(range)</i></span>
+returns a new range only containing elements <span class="d_psymbol"><i>x</i></span> in <span class="d_psymbol"><i>r</i></span> for
+which <span class="d_psymbol"><i>pred(x)</i></span> is <span class="d_psymbol"><i><b>true</b></i></span>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] arr = [ 1, 2, 3, 4, 5 ];
+<span class="d_comment">// Sum all elements
+</span><span class="d_keyword">auto</span> small = <span class="d_psymbol">filter</span>!(<span class="d_string">"a &lt; 3"</span>)(arr);
+<span class="d_keyword">assert</span>(small == [ 1, 2 ]);
+</pre>
+
+<b>Multiple ranges:</b><br> It is possible to pass any number
+of ranges to <span class="d_psymbol"><i><a name="filter"></a><u>filter</u></i></span>, as in <span class="d_psymbol"><i><a name="filter"></a><u>filter</u>!(fun)(range1, range2,
+range3)</i></span>. Then <span class="d_psymbol"><i><a name="filter"></a><u>filter</u></i></span> will simply apply its algorithm in
+succession to each range, from left to right. The type returned is
+that of the first range.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 3, -2, 400 ];
+<span class="d_keyword">int</span>[] b = [ 100, -101, 102 ];
+<span class="d_keyword">auto</span> r = <span class="d_psymbol">filter</span>!(<span class="d_string">"a &gt; 0"</span>)(a, b);
+<span class="d_keyword">assert</span>(r == [ 3, 400, 100, 102 ]);
+
+<span class="d_comment">// Mixing convertible types is fair game, too
+</span><span class="d_keyword">double</span>[] c = [ 2.5, 3.0 ];
+<span class="d_keyword">auto</span> r1 = <span class="d_psymbol">filter</span>!(<span class="d_string">"cast(int) a != a"</span>)(c, a, b);
+<span class="d_keyword">assert</span>(r1 == [ 2.5 ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="inPlace"></a><u>inPlace</u>(alias fun,Range,Ranges...)(Range <i>r</i>, Ranges <i>rs</i>);
+<br>void <a name="inPlace"></a><u>inPlace</u>(string fun,Ranges...)(Ranges <i>rs</i>);
+</div></dt>
+<dd>Similar to <span class="d_psymbol"><i>map</i></span>, but it manipulates the passed-in ranges in place
+and returns <span class="d_psymbol"><i>void</i></span>. The call <span class="d_psymbol"><i><a name="inPlace"></a><u>inPlace</u>!(fun)(range1, range2, ...,
+rangeN)</i></span> applies <span class="d_psymbol"><i>fun(x)</i></span> left to right for all <span class="d_psymbol"><i>ref x</i></span> in <span class="d_psymbol"><i>range1</i></span>, then all <span class="d_psymbol"><i>ref x</i></span> in <span class="d_psymbol"><i>range2</i></span>, ..., all <span class="d_psymbol"><i>ref x</i></span> in
+<span class="d_psymbol"><i>rangeN</i></span>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] arr1 = [ 1, 2, 3 ];
+<span class="d_psymbol">inPlace</span>!(writeln)(arr1); <span class="d_comment">// print the array
+</span><span class="d_keyword">double</span>[] arr2 = [ 4.0, 8.5, 13 ];
+<span class="d_psymbol">inPlace</span>!(<span class="d_string">"++a"</span>)(arr1, arr2);
+<span class="d_keyword">assert</span>(arr1 == [ 2, 3, 4 ]);
+<span class="d_keyword">assert</span>(arr2 == [ 5.0, 9.5, 14 ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="move"></a><u>move</u>(T)(ref T <i>source</i>, ref T <i>target</i>);
+</div></dt>
+<dd>Moves <span class="d_psymbol"><i>source</i></span> into <span class="d_psymbol"><i>target</i></span> via a destructive
+copy. Specifically: <ul><li>If <span class="d_psymbol"><i>hasAliasing!(T)</i></span> is <b>true</b> (see
+<a href=std_traits.html#hasAliasing>std.traits.hasAliasing</a>
+
+), then the representation of <span class="d_psymbol"><i>source</i></span>
+is bitwise copied into <span class="d_psymbol"><i>target</i></span> and then <span class="d_psymbol"><i>source = T.init</i></span> is
+evaluated.</li>  <li>Otherwise, <span class="d_psymbol"><i>target = source</i></span> is evaluated.</li></ul> See
+also <a href=std_contracts.html#pointsTo>std.contracts.pointsTo</a>
+
+.
+<br><br>
+<b>Preconditions:</b><br>
+<span class="d_psymbol"><i>!pointsTo(source, source)</i></span>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="swap"></a><u>swap</u>(T)(ref T <i>lhs</i>, ref T <i>rhs</i>);
+</div></dt>
+<dd>Swaps <span class="d_psymbol"><i>lhs</i></span> and <span class="d_psymbol"><i>rhs</i></span>. See also <a href=std_contracts.html#pointsTo>std.contracts.pointsTo</a>
+
+.
+<br><br>
+<b>Preconditions:</b><br>
+<span class="d_psymbol"><i>!pointsTo(lhs, lhs) &amp;&amp; !pointsTo(lhs, rhs) &amp;&amp; !pointsTo(rhs, lhs)
+&amp;&amp; !pointsTo(rhs, rhs)</i></span>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Range <a name="overwriteAdjacent"></a><u>overwriteAdjacent</u>(alias pred,alias move,Range)(Range <i>r</i>);
+<br>Range <a name="overwriteAdjacent"></a><u>overwriteAdjacent</u>(string fun = "a == b",alias move = .move,Range)(Range <i>r</i>);
+</div></dt>
+<dd>Reduces <span class="d_psymbol"><i>r</i></span> by shifting it to the left until no adjacent elements
+<span class="d_psymbol"><i>a</i></span>, <span class="d_psymbol"><i>b</i></span> remain in <span class="d_psymbol"><i>r</i></span> such that <span class="d_psymbol"><i>pred(a, b)</i></span>. Shifting is
+performed by evaluating <span class="d_psymbol"><i>move(source, target)</i></span> as a primitive. The
+algorithm is stable and runs in <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length</i></span><b></i>)</i></b> time. Returns the
+reduced range.
+<br><br>
+The default <a href=std_algorithm.html#move>std.algorithm.move</a>
+
+ performs a potentially
+destructive assignment of <span class="d_psymbol"><i>source</i></span> to <span class="d_psymbol"><i>target</i></span>, so the objects
+beyond the returned range should be considered "empty". By default <span class="d_psymbol"><i>pred</i></span> compares for equality, in which case <span class="d_psymbol"><i><a name="overwriteAdjacent"></a><u>overwriteAdjacent</u></i></span>
+collapses adjacent duplicate elements to one (functionality akin to
+the <a href="http://wikipedia.org/wiki/Uniq">uniq</a> system utility).
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] arr = [ 1, 2, 2, 2, 2, 3, 4, 4, 4, 5 ];
+<span class="d_keyword">auto</span> r = <span class="d_psymbol">overwriteAdjacent</span>(arr);
+<span class="d_keyword">assert</span>(r == [ 1, 2, 3, 4, 5 ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Iterator!(Range) <a name="find"></a><u>find</u>(alias pred,Range,E)(Range <i>haystack</i>, E <i>needle</i>);
+<br>Iterator!(Range) <a name="find"></a><u>find</u>(string pred = "a == b",Range,E)(Range <i>haystack</i>, E <i>needle</i>);
+</div></dt>
+<dd>Finds the first occurrence of <span class="d_psymbol"><i>needle</i></span> in <span class="d_psymbol"><i>haystack</i></span> by linear
+search and returns an iterator to it.  An optional binary predicate
+<span class="d_psymbol"><i>pred</i></span> instructs <span class="d_psymbol"><i><a name="find"></a><u>find</u></i></span> on how to perform the comparison (with
+the current collection element in the first position and <span class="d_psymbol"><i>needle</i></span>
+in the second position). By default, comparison is for
+equality. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>haystack.length</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>pred</i></span>. See also <a href="http://sgi.com/tech/stl/find.html">STL's find</a>.
+<br><br>
+To <a name="find"></a><u>find</u> the last occurence of <span class="d_psymbol"><i>needle</i></span> in <span class="d_psymbol"><i>haystack</i></span>, call <span class="d_psymbol"><i><a name="find"></a><u>find</u>(retro(haystack), needle)</i></span> and compare the result against <span class="d_psymbol"><i>rEnd(haystack)</i></span>. See also <a href=std_iterator.html#retro>std.iterator.retro</a>
+
+.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">auto</span> a = [ 1, 2, 3 ];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">find</span>(a, 5) == end(a));       <span class="d_comment">// not found
+</span><span class="d_keyword">assert</span>(<span class="d_psymbol">find</span>(a, 2) == begin(a) + 1); <span class="d_comment">// found
+</span>
+<span class="d_comment">// Case-insensitive find of a string
+</span>string[] s = [ <span class="d_string">"Hello"</span>, <span class="d_string">"world"</span>, <span class="d_string">"!"</span> ];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">find</span>!(<span class="d_string">"toupper(a) == toupper(b)"</span>)(s, <span class="d_string">"hello"</span>) == begin(s));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Iterator!(Range) <a name="find"></a><u>find</u>(alias pred,Range)(Range <i>haystack</i>);
+<br>Iterator!(Range) <a name="find"></a><u>find</u>(string pred,Range)(Range <i>haystack</i>);
+</div></dt>
+<dd>Finds the first element in a range satisfying the unary predicate <span class="d_psymbol"><i>pred</i></span>. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>haystack.length</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>pred</i></span>. See
+also <a href="http://sgi.com/tech/stl/find_if.html">STL's find_if</a>.
+<br><br>
+To <a name="find"></a><u>find</u> the last element of <span class="d_psymbol"><i>haystack</i></span> satisfying <span class="d_psymbol"><i>pred</i></span>, call
+<span class="d_psymbol"><i><a name="find"></a><u>find</u>!(pred)(retro(haystack))</i></span> and compare the result against <span class="d_psymbol"><i>rEnd(haystack)</i></span>. See also <a href=std_iterator.html#retro>std.iterator.retro</a>
+
+.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">auto</span> arr = [ 1, 2, 3 ];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">find</span>!(<span class="d_string">"a &gt; 2"</span>)(arr) == end(arr) - 1);
+
+<span class="d_comment">// with predicate alias
+</span><span class="d_keyword">bool</span> pred(<span class="d_keyword">int</span> x) { <span class="d_keyword">return</span> x + 1 &gt; 1.5; }
+<span class="d_keyword">assert</span>(<span class="d_psymbol">find</span>!(pred)(arr) == begin(arr));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Iterator!(Range1) <a name="findRange"></a><u>findRange</u>(alias pred,Range1,Range2)(Range1 <i>seq</i>, Range2 <i>subseq</i>);
+<br>Iterator!(Range1) <a name="findRange"></a><u>findRange</u>(string pred = "a == b",Range1,Range2)(Range1 <i>seq</i>, Range2 <i>subseq</i>);
+</div></dt>
+<dd>Finds the first occurrence of <span class="d_psymbol"><i>subseq</i></span> in <span class="d_psymbol"><i>seq</i></span> by repeated
+linear searches.  Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>seq.length * subseq.length</i></span><b></i>)</i></b>
+evaluations of <span class="d_psymbol"><i>pred</i></span>, which makes it unrecommended for very large
+ranges, for which <a href=std_algorithm.html#findBoyerMoore>std.algorithm.findBoyerMoore</a>
+
+ may be more
+appropriate. See also <a href="http://sgi.com/tech/stl/search.html">STL's
+search</a>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ -1, 0, 1, 2, 3, 4, 5 ];
+<span class="d_keyword">int</span>[] b = [ 1, 2, 3 ];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">findRange</span>(a, b) == begin(a) + 2);
+<span class="d_keyword">assert</span>(<span class="d_psymbol">findRange</span>(b, a) == end(b));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Iterator!(Range) <a name="findBoyerMoore"></a><u>findBoyerMoore</u>(alias pred,Range)(Range <i>seq</i>, Range <i>subseq</i>);
+<br>Iterator!(Range) <a name="findBoyerMoore"></a><u>findBoyerMoore</u>(string pred = "a == b",Range)(Range <i>seq</i>, Range <i>subseq</i>);
+</div></dt>
+<dd>Finds the first occurrence of <span class="d_psymbol"><i>subseq</i></span> in <span class="d_psymbol"><i>seq</i></span> by using the
+<a href="http://www-igm.univ-mlv.fr/~lecroq/string/node14.html">Boyer-Moore
+algorithm</a>.  The algorithm has an upfront cost but scales sublinearly,
+so it is most suitable for large sequences. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>seq.length</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>pred</i></span> in the worst case and <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>seq.length / subseq.length</i></span><b></i>)</i></b> evaluations in the best case.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ -1, 0, 1, 2, 3, 4, 5 ];
+<span class="d_keyword">int</span>[] b = [ 1, 2, 3 ];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">findBoyerMoore</span>(a, b) == begin(a) + 2);
+<span class="d_keyword">assert</span>(<span class="d_psymbol">findBoyerMoore</span>(b, a) == end(b));
+</pre>
+
+<br><br>
+<span style="color:red">BUGS:</span><br>
+Should cache the scaffolding built for the last <span class="d_psymbol"><i>subseq</i></span> in
+thread-safe storage so it is not rebuilt repeatedly.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Iterator!(Range) <a name="findAdjacent"></a><u>findAdjacent</u>(alias pred,Range)(Range <i>r</i>);
+<br>Iterator!(Range) <a name="findAdjacent"></a><u>findAdjacent</u>(string pred = "a == b",Range)(Range <i>r</i>);
+</div></dt>
+<dd>Finds the first two adjacent elements <span class="d_psymbol"><i>a</i></span>, <span class="d_psymbol"><i>b</i></span> in the range <span class="d_psymbol"><i>r</i></span> that satisfy <span class="d_psymbol"><i>pred(a, b)</i></span>. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length</i></span><b></i>)</i></b>
+evaluations of <span class="d_psymbol"><i>pred</i></span>. See also <a href="http://sgi.com/tech/stl/adjacent_find.html">STL's adjacent_find</a>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 11, 10, 10, 9, 8, 8, 7, 8, 9 ];
+<span class="d_keyword">auto</span> p = <span class="d_psymbol">findAdjacent</span>(a);
+<span class="d_keyword">assert</span>(p == begin(a) + 1);
+p = <span class="d_psymbol">findAdjacent</span>!(<span class="d_string">"a &lt; b"</span>)(a);
+<span class="d_keyword">assert</span>(p == begin(a) + 6);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Iterator!(Range1) <a name="findAmong"></a><u>findAmong</u>(alias pred,Range1,Range2)(Range1 <i>seq</i>, Range2 <i>choices</i>);
+<br>Iterator!(Range1) <a name="findAmong"></a><u>findAmong</u>(string pred = "a == b",Range1,Range2)(Range1 <i>seq</i>, Range2 <i>choices</i>);
+</div></dt>
+<dd>Finds the first element in <span class="d_psymbol"><i>seq</i></span> that compares equal (according to
+<span class="d_psymbol"><i>pred</i></span>) with some element in <span class="d_psymbol"><i>choices</i></span>. Choices are sought by
+linear search. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>seq.length * choices.length</i></span><b></i>)</i></b>
+evaluations of <span class="d_psymbol"><i>pred</i></span>. See also <a href="http://sgi.com/tech/stl/find_first_of.html">STL's find_first_of</a>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ -1, 0, 1, 2, 3, 4, 5 ];
+<span class="d_keyword">int</span>[] b = [ 3, 1, 2 ];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">findAmong</span>(a, b) == begin(a) + 2);
+<span class="d_keyword">assert</span>(<span class="d_psymbol">findAmong</span>(b, a) == begin(b));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Iterator!(Range1) <a name="findAmongSorted"></a><u>findAmongSorted</u>(alias less,Range1,Range2)(Range1 <i>seq</i>, in Range2 <i>choices</i>);
+<br>Iterator!(Range1) <a name="findAmongSorted"></a><u>findAmongSorted</u>(string less = "a &lt; b",Range1,Range2)(Range1 <i>seq</i>, in Range2 <i>subseq</i>);
+</div></dt>
+<dd>Finds the first element <span class="d_psymbol"><i>x</i></span> in <span class="d_psymbol"><i>seq</i></span> that compares equal with
+some element <span class="d_psymbol"><i>y</i></span> in <span class="d_psymbol"><i>choices</i></span> (meaning <span class="d_psymbol"><i>!less(x, y) &amp;&amp;
+!less(y, x)</i></span>). The <span class="d_psymbol"><i>choices</i></span> range is sought by binary
+search. Consequently <span class="d_psymbol"><i>choices</i></span> is assumed to be sorted according to
+<span class="d_psymbol"><i>pred</i></span>, which by default is <span class="d_psymbol"><i>"a &lt; b"</i></span>. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>seq.length * log(choices.length)</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>less</i></span>.
+<br><br>
+To find the last element of <span class="d_psymbol"><i>seq</i></span> instead of the first, call <span class="d_psymbol"><i><a name="findAmongSorted"></a><u>findAmongSorted</u>(retro(seq), choices)</i></span> and compare the result against
+<span class="d_psymbol"><i>rEnd(seq)</i></span>. See also <a href=std_iterator.html#retro>std.iterator.retro</a>
+
+.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ -1, 0, 1, 2, 3, 4, 5 ];
+<span class="d_keyword">int</span>[] b = [ 1, 2, 3 ];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">findAmongSorted</span>(a, b) == begin(a) + 2);
+<span class="d_keyword">assert</span>(<span class="d_psymbol">findAmongSorted</span>(b, a) == end(b));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">bool <a name="canFind"></a><u>canFind</u>(alias pred,Range,E)(Range <i>haystack</i>, E <i>needle</i>);
+<br>bool <a name="canFind"></a><u>canFind</u>(string pred = "a == b",Range,E)(Range <i>haystack</i>, E <i>needle</i>);
+<br>bool <a name="canFind"></a><u>canFind</u>(alias pred,Range,E)(Range <i>haystack</i>);
+<br>bool <a name="canFind"></a><u>canFind</u>(string pred,Range,E)(Range <i>haystack</i>);
+<br>bool <a name="canFindAmong"></a><u>canFindAmong</u>(alias pred,Range1,Range2)(Range <i>seq</i>, Range2 <i>choices</i>);
+<br>bool <a name="canFindAmong"></a><u>canFindAmong</u>(string pred,Range1,Range2)(Range <i>seq</i>, Range2 <i>choices</i>);
+<br>bool <a name="canFindAmongSorted"></a><u>canFindAmongSorted</u>(alias pred,Range1,Range2)(Range <i>seq</i>, Range2 <i>choices</i>);
+<br>bool <a name="canFindAmongSorted"></a><u>canFindAmongSorted</u>(string pred,Range1,Range2)(Range <i>seq</i>, Range2 <i>choices</i>);
+</div></dt>
+<dd>Convenience functions returning <span class="d_psymbol"><i><b>true</b></i></span> if and only if the
+corresponding <span class="d_psymbol"><i>find*</i></span> functions return an iterator different from
+<span class="d_psymbol"><i>end(r)</i></span>. They are handy in the numerous situations when the
+success of the <span class="d_psymbol"><i>find*</i></span> functions is queried but the actual position
+found is unimportant.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ -1, 0, 1, 2, 3, 4, 5 ];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">canFind</span>(a, 4));
+<span class="d_keyword">assert</span>(!<span class="d_psymbol">canFind</span>(a, 10));
+<span class="d_keyword">assert</span>(<span class="d_psymbol">canFind</span>!(<span class="d_string">"a - 1 &lt; b"</span>)(a, 4));
+<span class="d_keyword">assert</span>(!<span class="d_psymbol">canFind</span>!(<span class="d_string">"a &gt; 5"</span>)(a));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">size_t <a name="count"></a><u>count</u>(alias pred,Range,E)(Range <i>r</i>, E <i>value</i>);
+<br>size_t <a name="count"></a><u>count</u>(string pred = "a == b",Range,E)(Range <i>r</i>, E <i>value</i>);
+</div></dt>
+<dd>Counts the number of elements <span class="d_psymbol"><i>x</i></span> in <span class="d_psymbol"><i>r</i></span> for which <span class="d_psymbol"><i>pred(x,
+value)</i></span> is <span class="d_psymbol"><i><b>true</b></i></span>. <span class="d_psymbol"><i>pred</i></span> defaults to equality. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>pred</i></span>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 1, 2, 4, 3, 2, 5, 3, 2, 4 ];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">count</span>(a, 2) == 3);
+<span class="d_keyword">assert</span>(<span class="d_psymbol">count</span>!(<span class="d_string">"a &gt; b"</span>)(a, 2) == 5);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">size_t <a name="count"></a><u>count</u>(alias pred,Range)(Range <i>r</i>);
+<br>size_t <a name="count"></a><u>count</u>(string pred,Range)(Range <i>r</i>);
+</div></dt>
+<dd>Counts the number of elements <span class="d_psymbol"><i>x</i></span> in <span class="d_psymbol"><i>r</i></span> for which <span class="d_psymbol"><i>pred(x)</i></span>
+is <span class="d_psymbol"><i><b>true</b></i></span>. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>pred</i></span>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 1, 2, 4, 3, 2, 5, 3, 2, 4 ];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">count</span>!(<span class="d_string">"a &gt; 1"</span>)(a) == 8);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">bool <a name="equal"></a><u>equal</u>(alias pred,Range1,Range2)(Range1 <i>r1</i>, Range2 <i>r2</i>);
+<br>bool <a name="equal"></a><u>equal</u>(string pred = "a == b",Range1,Range2)(Range1 <i>r1</i>, Range2 <i>r2</i>);
+</div></dt>
+<dd>Returns <span class="d_psymbol"><i><b>true</b></i></span> if and only if the two ranges compare <a name="equal"></a><u>equal</u> element
+for element, according to binary predicate <span class="d_psymbol"><i>pred</i></span>. The ranges may
+have different element types, as long as <span class="d_psymbol"><i>pred(a, b)</i></span> evaluates to
+<span class="d_psymbol"><i>bool</i></span> for <span class="d_psymbol"><i>a</i></span> in <span class="d_psymbol"><i>r1</i></span> and <span class="d_psymbol"><i>b</i></span> in <span class="d_psymbol"><i>r2</i></span>. Performs
+<i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>min(r1.length, r2.length)</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>pred</i></span>. See also
+<a href="http://sgi.com/tech/stl/equal.html">STL's <a name="equal"></a><u>equal</u></a>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 1, 2, 4, 3 ];
+<span class="d_keyword">assert</span>(!<span class="d_psymbol">equal</span>(a, a[1..$]));
+<span class="d_keyword">assert</span>(<span class="d_psymbol">equal</span>(a, a));
+
+<span class="d_comment">// different types
+</span><span class="d_keyword">double</span>[] b = [ 1., 2, 4, 3];
+<span class="d_keyword">assert</span>(!<span class="d_psymbol">equal</span>(a, b[1..$]));
+<span class="d_keyword">assert</span>(<span class="d_psymbol">equal</span>(a, b));
+
+<span class="d_comment">// predicated: ensure that two vectors are approximately equal
+</span><span class="d_keyword">double</span>[] c = [ 1.005, 2, 4, 3];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">equal</span>!(approxEqual)(b, c));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Range <a name="overlap"></a><u>overlap</u>(Range)(Range <i>r1</i>, Range <i>r2</i>);
+</div></dt>
+<dd>Returns the overlapping range, if any, of two ranges. Unlike <span class="d_psymbol"><i>equal</i></span>, <span class="d_psymbol"><i><a name="overlap"></a><u>overlap</u></i></span> only compares the iterators in the ranges, not
+the values referred by them. If <span class="d_psymbol"><i>r1</i></span> and <span class="d_psymbol"><i>r2</i></span> have an
+overlapping range, returns that range. Otherwise, returns an empty
+range. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>min(r1.length, r2.length)</i></span><b></i>)</i></b> iterator increment
+operations and comparisons if the ranges are forward, and <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>1</i></span><b></i>)</i></b>
+operations if the ranges have random access.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 10, 11, 12, 13, 14 ];
+<span class="d_keyword">int</span>[] b = a[1 .. 3];
+<span class="d_keyword">assert</span>(<span class="d_psymbol">overlap</span>(a, b) == [ 11, 12 ]);
+b = b.dup;
+<span class="d_comment">// overlap disappears even though the content is the same
+</span><span class="d_keyword">assert</span>(isEmpty(<span class="d_psymbol">overlap</span>(a, b)));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">MinType!(T1,T2,T) <a name="min"></a><u>min</u>(T1,T2,T...)(T1 <i>a</i>, T2 <i>b</i>, T <i>xs</i>);
+</div></dt>
+<dd>Returns the minimum of the passed-in values. The type of the result is
+computed by using <a href=std_traits.html#CommonType>std.traits.CommonType</a>
+
+.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">MaxType!(T1,T2,T) <a name="max"></a><u>max</u>(T1,T2,T...)(T1 <i>a</i>, T2 <i>b</i>, T <i>xs</i>);
+</div></dt>
+<dd>Returns the maximum of the passed-in values. The type of the result is
+computed by using <a href=std_traits.html#CommonType>std.traits.CommonType</a>
+
+.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span> a = 5;
+<span class="d_keyword">short</span> b = 6;
+<span class="d_keyword">double</span> c = 2;
+<span class="d_keyword">auto</span> d = <span class="d_psymbol">max</span>(a, b);
+<span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(d) == <span class="d_keyword">int</span>));
+<span class="d_keyword">assert</span>(d == 6);
+<span class="d_keyword">auto</span> e = min(a, b, c);
+<span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(e) == <span class="d_keyword">double</span>));
+<span class="d_keyword">assert</span>(e == 2);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Tuple!(Iterator!(Range1),Iterator!(Range2)) <a name="mismatch"></a><u>mismatch</u>(alias pred,Range1,Range2)(Range1 <i>r1</i>, Range2 <i>r2</i>);
+<br>Tuple!(Iterator!(Range1),Iterator!(Range2)) <a name="mismatch"></a><u>mismatch</u>(string pred = "a == b",Range1,Range2)(Range1 <i>r1</i>, Range2 <i>r2</i>);
+</div></dt>
+<dd>Sequentially compares elements in <span class="d_psymbol"><i>r1</i></span> and <span class="d_psymbol"><i>r2</i></span> in lockstep, and
+stops at the first <a name="mismatch"></a><u>mismatch</u> (according to <span class="d_psymbol"><i>pred</i></span>, by default
+equality). Returns a tuple with the iterators that refer to the two
+mismatched values. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>min(r1.length, r2.length)</i></span><b></i>)</i></b>
+evaluations of <span class="d_psymbol"><i>pred</i></span>. See also <a href="http://sgi.com/tech/stl/mismatch.html">STL's <a name="mismatch"></a><u>mismatch</u></a>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[]    x = [ 1,  5, 2, 7,   4, 3 ];
+<span class="d_keyword">double</span>[] y = [ 1., 5, 2, 7.3, 4, 8 ];
+<span class="d_keyword">auto</span> m = <span class="d_psymbol">mismatch</span>(x, y);
+<span class="d_keyword">assert</span>(m._0 == begin(x) + 3);
+<span class="d_keyword">assert</span>(m._1 == begin(y) + 3);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">enum <a name="EditOp"></a><u>EditOp</u>;
+</div></dt>
+<dd>Encodes <a href="http://realityinteractive.com/rgrzywinski/archives/000249.html">edit operations</a> necessary to transform one sequence into
+another. Given sequences <span class="d_psymbol"><i>s</i></span> (source) and <span class="d_psymbol"><i>t</i></span> (target), a
+sequence of <span class="d_psymbol"><i><a name="EditOp"></a><u>EditOp</u></i></span> encodes the steps that need to be taken to
+convert <span class="d_psymbol"><i>s</i></span> into <span class="d_psymbol"><i>t</i></span>. For example, if <span class="d_psymbol"><i>s = "cat"</i></span> and <span class="d_psymbol"><i>"cars"</i></span>, the minimal sequence that transforms <span class="d_psymbol"><i>s</i></span> into <span class="d_psymbol"><i>t</i></span> is:
+skip two characters, replace 't' with 'r', and insert an 's'. Working
+with edit operations is useful in applications such as spell-checkers
+(to find the closest word to a given misspelled word), approximate
+searches, diff-style programs that compute the difference between
+files, efficient encoding of patches, DNA sequence analysis, and
+plagiarism detection.
+<br><br>
+
+<dl><dt><div class="d_decl"><a name="none"></a><u>none</u></div></dt>
+<dd>Current items are equal; no editing is necessary. 
+<br><br>
+
+</dd>
+<dt><div class="d_decl"><a name="substitute"></a><u>substitute</u></div></dt>
+<dd>Substitute current item in target with current item in source. 
+<br><br>
+
+</dd>
+<dt><div class="d_decl"><a name="insert"></a><u>insert</u></div></dt>
+<dd>Insert current item from the source into the target. 
+<br><br>
+
+</dd>
+<dt><div class="d_decl"><a name="remove"></a><u>remove</u></div></dt>
+<dd>Remove current item from the target. 
+<br><br>
+
+</dd>
+</dl>
+</dd>
+<dt><div class="d_decl">size_t <a name="levenshteinDistance"></a><u>levenshteinDistance</u>(alias equals,Range1,Range2)(Range1 <i>s</i>, Range2 <i>t</i>);
+<br>size_t <a name="levenshteinDistance"></a><u>levenshteinDistance</u>(string equals = "a == b",Range1,Range2)(Range1 <i>s</i>, Range2 <i>t</i>);
+</div></dt>
+<dd>Returns the <a href="http://wikipedia.org/wiki/Levenshtein_distance">Levenshtein
+distance</a> between <span class="d_psymbol"><i>s</i></span> and <span class="d_psymbol"><i>t</i></span>. The Levenshtein distance computes
+the minimal amount of edit operations necessary to transform <span class="d_psymbol"><i>s</i></span>
+into <span class="d_psymbol"><i>t</i></span>.  Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>s.length * t.length</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>equals</i></span> and occupies <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>s.length * t.length</i></span><b></i>)</i></b> storage.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">assert</span>(<span class="d_psymbol">levenshteinDistance</span>(<span class="d_string">"cat"</span>, <span class="d_string">"rat"</span>) == 1);
+<span class="d_keyword">assert</span>(<span class="d_psymbol">levenshteinDistance</span>(<span class="d_string">"parks"</span>, <span class="d_string">"spark"</span>) == 2);
+<span class="d_keyword">assert</span>(<span class="d_psymbol">levenshteinDistance</span>(<span class="d_string">"kitten"</span>, <span class="d_string">"sitting"</span>) == 3);
+<span class="d_comment">// ignore case
+</span><span class="d_keyword">assert</span>(<span class="d_psymbol">levenshteinDistance</span>!(<span class="d_string">"toupper(a) == toupper(b)"</span>)
+    (<span class="d_string">"parks"</span>, <span class="d_string">"SPARK"</span>) == 2);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Tuple!(size_t,EditOp[]) <a name="levenshteinDistanceAndPath"></a><u>levenshteinDistanceAndPath</u>(alias equals,Range1,Range2)(Range1 <i>s</i>, Range2 <i>t</i>);
+<br>Tuple!(size_t,EditOp[]) <a name="levenshteinDistanceAndPath"></a><u>levenshteinDistanceAndPath</u>(string equals = "a == b",Range1,Range2)(Range1 <i>s</i>, Range2 <i>t</i>);
+</div></dt>
+<dd>Returns the Levenshtein distance and the edit path between <span class="d_psymbol"><i>s</i></span> and
+<span class="d_psymbol"><i>t</i></span>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code">string a = <span class="d_string">"Saturday"</span>, b = <span class="d_string">"Sunday"</span>;
+<span class="d_keyword">auto</span> p = <span class="d_psymbol">levenshteinDistanceAndPath</span>(a, b);
+<span class="d_keyword">assert</span>(p._0, 3);
+<span class="d_keyword">assert</span>(equals(p._1, <span class="d_string">"nrrnsnnn"</span>));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Range2 <a name="copy"></a><u>copy</u>(Range1,Range2)(Range1 <i>source</i>, Range2 <i>target</i>);
+</div></dt>
+<dd>Copies the content of <span class="d_psymbol"><i>source</i></span> into <span class="d_psymbol"><i>target</i></span> and returns the
+remaining (unfilled) part of <span class="d_psymbol"><i>target</i></span>. See also <a href="http://sgi.com/tech/stl/copy.html">STL's <a name="copy"></a><u>copy</u></a>. If a behavior similar to
+<a href="http://sgi.com/tech/stl/copy_backward.html">STL's copy_backward</a> is
+needed, use <span class="d_psymbol"><i><a name="copy"></a><u>copy</u>(retro(source), retro(target))</i></span>. See also <a href=std_iterator.html#retro>std.iterator.retro</a>
+
+.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 1, 5 ];
+<span class="d_keyword">int</span>[] b = [ 9, 8 ];
+<span class="d_keyword">int</span>[] c = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[a.length + b.length + 10];
+<span class="d_keyword">auto</span> d = <span class="d_psymbol">copy</span>(b, <span class="d_psymbol">copy</span>(a, c));
+<span class="d_keyword">assert</span>(c[0 .. a.length + b.length] == a ~ b);
+<span class="d_keyword">assert</span>(d.length == 10);
+</pre>
+
+As long as the target range elements support assignment from source
+range elements, different types of ranges are accepted.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">float</span>[] a = [ 1.0f, 5 ];
+<span class="d_keyword">double</span>[] b = <span class="d_keyword">new</span> <span class="d_keyword">double</span>[a.length];
+<span class="d_keyword">auto</span> d = <span class="d_psymbol">copy</span>(a, b);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Range2 <a name="copyIf"></a><u>copyIf</u>(alias pred,Range1,Range2)(Range1 <i>source</i>, Range2 <i>target</i>);
+</div></dt>
+<dd>Copies in increasing order the elements <span class="d_psymbol"><i>x</i></span> of <span class="d_psymbol"><i>source</i></span>
+satisfying <span class="d_psymbol"><i>pred(x)</i></span> into <span class="d_psymbol"><i>target</i></span> and returns the remaining
+(unfilled) part of <span class="d_psymbol"><i>target</i></span>. See also <a href="http://sgi.com/tech/stl/copy_if.html">STL's copy_if</a>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 1, 5, 8, 9, 10, 1, 2, 0 ];
+<span class="d_keyword">auto</span> b = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[a.length];
+<span class="d_keyword">auto</span> c = <span class="d_psymbol">copyIf</span>!(<span class="d_string">"(a &amp; 1) == 1"</span>)(a, b);
+<span class="d_keyword">assert</span>(b[0 .. $ - c.length] == [ 1, 5, 9, 1 ]);
+</pre>
+
+As long as the target range elements support assignment from source
+range elements, different types of ranges are accepted.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">float</span>[] a = [ 1.0f, 5, -3, -5, 0, 4, -3 ];
+<span class="d_keyword">double</span>[] b = <span class="d_keyword">new</span> <span class="d_keyword">double</span>[a.length];
+<span class="d_keyword">auto</span> d = <span class="d_psymbol">copyIf</span>!(<span class="d_string">"a &gt; 0"</span>)(a, b);
+<span class="d_keyword">assert</span>(a == [ 1.0f, 5, 0, 4 ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="iterSwap"></a><u>iterSwap</u>(It)(It <i>lhs</i>, It <i>rhs</i>);
+</div></dt>
+<dd>Swaps <span class="d_psymbol"><i>*lhs</i></span> and <span class="d_psymbol"><i>*rhs</i></span>.
+<br><br>
+<b>Preconditions:</b><br>
+Same as for <span class="d_psymbol"><i>swap(*lhs, *rhs)</i></span>.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Range2 <a name="swapRanges"></a><u>swapRanges</u>(alias iterSwap = .iterSwap,Range1,Range2)(T <i>r1</i>, T <i>r2</i>);
+</div></dt>
+<dd>Swaps all elements of <span class="d_psymbol"><i>r1</i></span> with successive elements in <span class="d_psymbol"><i>r2</i></span>
+using <span class="d_psymbol"><i>iterSwap</i></span> as a primitive. <span class="d_psymbol"><i>r1</i></span> must contain less or the
+same number of elements as <span class="d_psymbol"><i>r2</i></span>; an exception will be thrown
+otherwise. Returns the tail portion of <span class="d_psymbol"><i>r2</i></span> that was not swapped.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 100, 101, 102, 103 ];
+<span class="d_keyword">int</span>[] b = [ 0, 1, 2, 3 ];
+<span class="d_keyword">auto</span> c = <span class="d_psymbol">swapRanges</span>(a[1 .. 2], b[2 .. 3]);
+<span class="d_keyword">assert</span>(!c.length);
+<span class="d_keyword">assert</span>(a == [ 100, 2, 3, 103 ]);
+<span class="d_keyword">assert</span>(b == [ 0, 1, 101, 102 ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="reverse"></a><u>reverse</u>(alias iterSwap = .iterSwap,Range)(Range <i>r</i>);
+</div></dt>
+<dd>Reverses <span class="d_psymbol"><i>r</i></span> in-place.  Performs <span class="d_psymbol"><i>r.length</i></span> evaluations of <span class="d_psymbol"><i>iterSwap</i></span>. See also <a href="http://sgi.com/tech/stl/reverse.html">STL's
+<a name="reverse"></a><u>reverse</u></a>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] arr = [ 1, 2, 3 ];
+<span class="d_psymbol">reverse</span>(arr);
+<span class="d_keyword">assert</span>(arr == [ 3, 2, 1 ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">It <a name="rotate"></a><u>rotate</u>(alias iterSwap = .iterSwap,Range,It)(Range <i>r</i>, It <i>middle</i>);
+</div></dt>
+<dd>Rotates the range <span class="d_psymbol"><i>r = [first, last)</i></span> such that the slice
+<span class="d_psymbol"><i>[middle, last)</i></span> gets moved in front of the slice <span class="d_psymbol"><i>[first, middle)</i></span>. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length</i></span><b></i>)</i></b> evaluations of
+<span class="d_psymbol"><i>iterSwap</i></span>. See also <a href="http://sgi.com/tech/stl/rotate.html">STL's
+<a name="rotate"></a><u>rotate</u></a>.
+<br><br>
+<b>Preconditions:</b><br>
+<span class="d_psymbol"><i>first &lt;= middle &amp;&amp; middle &lt;= last</i></span>;
+
+<br><br>
+<b>Returns:</b><br>
+The position in which <span class="d_psymbol"><i>first</i></span> has been rotated.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">auto</span> arr = [4, 5, 6, 7, 1, 2, 3];
+<span class="d_keyword">auto</span> p = <span class="d_psymbol">rotate</span>(arr, begin(arr) + 4);
+<span class="d_keyword">assert</span>(p - begin(arr) == 3);
+<span class="d_keyword">assert</span>(arr == [ 1, 2, 3, 4, 5, 6, 7 ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">enum <a name="SwapStrategy"></a><u>SwapStrategy</u>;
+</div></dt>
+<dd>Defines the swapping strategy for algorithms that need to swap
+elements in a range (such as partition and sort). The strategy
+concerns the swapping of elements that are not the core concern of the
+algorithm. For example, consider an algorithm that sorts <span class="d_psymbol"><i>[ "abc",
+"b", "aBc" ]</i></span> according to <span class="d_psymbol"><i>toupper(a) &lt; toupper(b)</i></span>. That
+algorithm might choose to swap the two equivalent strings <span class="d_psymbol"><i>"abc"</i></span>
+and <span class="d_psymbol"><i>"aBc"</i></span>. That does not affect the sorting since both <span class="d_psymbol"><i>[
+"abc", "aBc", "b" ]</i></span> and <span class="d_psymbol"><i>[ "aBc", "abc", "b" ]</i></span> are valid
+outcomes.
+<br><br>
+Some situations require that the algorithm must NOT ever change the
+relative ordering of equivalent elements (in the example above, only
+<span class="d_psymbol"><i>[ "abc", "aBc", "b" ]</i></span> would be the correct result). Such
+algorithms are called <b>stable</b>. If the ordering algorithm may swap
+equivalent elements discretionarily, the ordering is called <b>unstable</b>.
+<br><br>
+
+Yet another class of algorithms may choose an intermediate tradeoff by
+being stable only on a well-defined subrange of the range. There is no
+established terminology for such behavior; this library calls it <b>semistable</b>.
+<br><br>
+
+Generally, the <span class="d_psymbol"><i>stable</i></span> ordering strategy may be more costly in
+time and/or space than the other two because it imposes additional
+constraints. Similarly, <span class="d_psymbol"><i>semistable</i></span> may be costlier than <span class="d_psymbol"><i>unstable</i></span>. As (semi-)stability is not needed very often, the ordering
+algorithms in this module parameterized by <span class="d_psymbol"><i><a name="SwapStrategy"></a><u>SwapStrategy</u></i></span> all
+choose <span class="d_psymbol"><i><a name="SwapStrategy"></a><u>SwapStrategy</u>.unstable</i></span> as the default.
+<br><br>
+
+<dl><dt><div class="d_decl"><a name="unstable"></a><u>unstable</u></div></dt>
+<dd>Allows freely swapping of elements as long as the output
+       satisfies the algorithm's requirements.
+    
+<br><br>
+
+</dd>
+<dt><div class="d_decl"><a name="semistable"></a><u>semistable</u></div></dt>
+<dd>In algorithms partitioning ranges in two, preserve relative
+       ordering of elements only to the left of the partition point.
+    
+<br><br>
+
+</dd>
+<dt><div class="d_decl"><a name="stable"></a><u>stable</u></div></dt>
+<dd>Preserve the relative ordering of elements to the largest
+       extent allowed by the algorithm's requirements.
+    
+<br><br>
+
+</dd>
+</dl>
+</dd>
+<dt><div class="d_decl">Range <a name="eliminate"></a><u>eliminate</u>(alias pred,SwapStrategy ss = SwapStrategy.unstable,alias move = .move,Range)(Range <i>r</i>);
+<br>Range <a name="eliminate"></a><u>eliminate</u>(string fun,SwapStrategy ss = SwapStrategy.unstable,alias move = .move,Range)(Range <i>r</i>);
+</div></dt>
+<dd>Reduces <span class="d_psymbol"><i>r</i></span> by overwriting all elements <span class="d_psymbol"><i>x</i></span> that satisfy <span class="d_psymbol"><i>pred(x)</i></span>. Returns the reduced range.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] arr = [ 1, 2, 3, 4, 5 ];
+<span class="d_comment">// eliminate even elements
+</span><span class="d_keyword">auto</span> r = <span class="d_psymbol">eliminate</span>!(<span class="d_string">"(a &amp; 1) == 0"</span>)(arr);
+<span class="d_keyword">assert</span>(r == [ 1, 3, 5 ]);
+<span class="d_keyword">assert</span>(arr == [ 1, 3, 5, 4, 5 ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Range <a name="eliminate"></a><u>eliminate</u>(alias pred,SwapStrategy ss = SwapStrategy.semistable,Range,Value)(Range <i>r</i>, Value <i>v</i>);
+<br>Range <a name="eliminate"></a><u>eliminate</u>(string pred = "a == b",SwapStrategy ss = SwapStrategy.semistable,Range,Value)(Range <i>r</i>, Value <i>v</i>);
+</div></dt>
+<dd>Reduces <span class="d_psymbol"><i>r</i></span> by overwriting all elements <span class="d_psymbol"><i>x</i></span> that satisfy <span class="d_psymbol"><i>pred(x, v)</i></span>. Returns the reduced range.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] arr = [ 1, 2, 3, 2, 4, 5, 2 ];
+<span class="d_comment">// keep elements different from 2
+</span><span class="d_keyword">auto</span> r = <span class="d_psymbol">eliminate</span>(arr, 2);
+<span class="d_keyword">assert</span>(r == [ 1, 3, 4, 5 ]);
+<span class="d_keyword">assert</span>(arr == [ 1, 3, 4, 5, 4, 5, 2  ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Iterator!(Range) <a name="partition"></a><u>partition</u>(alias pred,SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,Range)(Range <i>r</i>);
+<br>Iterator!(Range) <a name="partition"></a><u>partition</u>(string pred,SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,Range)(Range <i>r</i>);
+</div></dt>
+<dd>Partitions a range in two using <span class="d_psymbol"><i>pred</i></span> as a predicate and <span class="d_psymbol"><i>iterSwap</i></span> as a primitive to swap two elements. Specifically, reorders
+the range <span class="d_psymbol"><i>r = [left, right)</i></span> using <span class="d_psymbol"><i>iterSwap</i></span> such that
+all elements <span class="d_psymbol"><i>i</i></span> for which <span class="d_psymbol"><i>pred(i)</i></span> is <span class="d_psymbol"><i><b>true</b></i></span> come before
+all elements <span class="d_psymbol"><i>j</i></span> for which <span class="d_psymbol"><i>pred(j)</i></span> returns <span class="d_psymbol"><i><b>false</b></i></span>.
+<br><br>
+Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length</i></span><b></i>)</i></b> (if unstable or semistable) or <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length * log(r.length)</i></span><b></i>)</i></b> (if stable) evaluations of <span class="d_psymbol"><i>less</i></span> and <span class="d_psymbol"><i>iterSwap</i></span>. The unstable version computes the minimum possible
+evaluations of <span class="d_psymbol"><i>iterSwap</i></span> (roughly half of those performed by the
+semistable version).
+<br><br>
+
+<span class="d_psymbol"><i><a name="partition"></a><u>partition</u></i></span> always calls <span class="d_psymbol"><i>iterSwap(i, j)</i></span> for iterators
+satisfying <span class="d_psymbol"><i>i &lt; j &amp;&amp; !pred(*i) &amp;&amp; pred(*j)</i></span>. After the call to <span class="d_psymbol"><i>iterSwap(i, j)</i></span>, <span class="d_psymbol"><i><a name="partition"></a><u>partition</u></i></span> makes no assumption on the values of
+<span class="d_psymbol"><i>*i</i></span> and <span class="d_psymbol"><i>*j</i></span>. Therefore, <span class="d_psymbol"><i><a name="partition"></a><u>partition</u></i></span> can be used to actually
+copy partitioned data to a different container or overwrite part of
+the array (in fact <span class="d_psymbol"><i>eliminate</i></span> uses <span class="d_psymbol"><i><a name="partition"></a><u>partition</u></i></span> with a custom
+<span class="d_psymbol"><i>iterSwap</i></span>).
+<br><br>
+
+See also STL's <a href="http://sgi.com/tech/stl/partition.html"><a name="partition"></a><u>partition</u></a> and
+<a href="http://sgi.com/tech/stl/stable_partition.html">stable_partition</a>.
+
+<br><br>
+<b>Returns:</b><br>
+An iterator <span class="d_psymbol"><i>p</i></span> such that the following conditions are
+simultaneously <b>true</b>:
+<ol><li><span class="d_psymbol"><i>pred(*p1)</i></span> for all <span class="d_psymbol"><i>p1</i></span> in [<span class="d_psymbol"><i>left</i></span>,
+<span class="d_psymbol"><i>p</i></span>), if any</li>
+<li><span class="d_psymbol"><i>!pred(*p2)</i></span> for all <span class="d_psymbol"><i>p2</i></span> in [<span class="d_psymbol"><i>p</i></span>,
+<span class="d_psymbol"><i>right</i></span>), if any</li></ol>
+If <span class="d_psymbol"><i>ss == SwapStrategy.stable</i></span>, <span class="d_psymbol"><i><a name="partition"></a><u>partition</u></i></span> preserves the
+relative ordering of all elements <span class="d_psymbol"><i>a</i></span>, <span class="d_psymbol"><i>b</i></span> in <span class="d_psymbol"><i>r</i></span> for which
+<span class="d_psymbol"><i>pred(a) == pred(b)</i></span>. If <span class="d_psymbol"><i>ss == SwapStrategy.semistable</i></span>, <span class="d_psymbol"><i><a name="partition"></a><u>partition</u></i></span> preserves the relative ordering of all elements <span class="d_psymbol"><i>a</i></span>, <span class="d_psymbol"><i>b</i></span> in <span class="d_psymbol"><i>begin(r) .. p</i></span> for which <span class="d_psymbol"><i>pred(a) == pred(b)</i></span>.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">auto</span> Arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+<span class="d_keyword">auto</span> arr = Arr.dup;
+<span class="d_keyword">static</span> <span class="d_keyword">bool</span> even(<span class="d_keyword">int</span> a) { <span class="d_keyword">return</span> (a &amp; 1) == 0; }
+<span class="d_comment">// Partition a such that even numbers come first
+</span><span class="d_keyword">auto</span> p = <span class="d_psymbol">partition</span>!(even)(arr);
+<span class="d_comment">// Now arr is separated in evens and odds.
+</span><span class="d_comment">// Numbers may have become shuffled due to instability
+</span><span class="d_keyword">assert</span>(p == arr.ptr + 5);
+<span class="d_keyword">assert</span>(count!(even)(range(begin(arr), p)) == p - begin(arr));
+<span class="d_keyword">assert</span>(find!(even)(range(p, end(arr))) == end(arr));
+
+<span class="d_comment">// Can also specify the predicate as a string.
+</span><span class="d_comment">// Use 'a' as the predicate argument name
+</span>arr[] = Arr[];
+p = <span class="d_psymbol">partition</span>!(<span class="d_string">q{(a &amp; 1) == 0}</span>)(arr);
+<span class="d_keyword">assert</span>(p == arr.ptr + 5);
+
+<span class="d_comment">// Now for a stable partition:
+</span>arr[] = Arr[];
+p = <span class="d_psymbol">partition</span>!(<span class="d_string">q{(a &amp; 1) == 0}</span>, SwapStrategy.stable)(arr);
+<span class="d_comment">// Now arr is [2 4 6 8 10 1 3 5 7 9], and p points to 1
+</span><span class="d_keyword">assert</span>(arr == [2, 4, 6, 8, 10, 1, 3, 5, 7, 9] &amp;&amp; p == arr.ptr + 5);
+
+<span class="d_comment">// In case the predicate needs to hold its own state, use a delegate:
+</span>arr[] = Arr[];
+<span class="d_keyword">int</span> x = 3;
+<span class="d_comment">// Put stuff greater than 3 on the left
+</span><span class="d_keyword">bool</span> fun(<span class="d_keyword">int</span> a) { <span class="d_keyword">return</span> a &gt; x; }
+p = <span class="d_psymbol">partition</span>!(fun, SwapStrategy.semistable)(arr);
+<span class="d_comment">// Now arr is [4 5 6 7 8 9 10 2 3 1] and p points to 2
+</span><span class="d_keyword">assert</span>(arr == [4, 5, 6, 7, 8, 9, 10, 2, 3, 1] &amp;&amp; p == arr.ptr + 7);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="topN"></a><u>topN</u>(alias less,SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,Range,It)(Range <i>r</i>, It <i>nth</i>);
+<br>void <a name="topN"></a><u>topN</u>(string less = "a &lt; b",SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,Range,It)(Range <i>r</i>, It <i>nth</i>);
+</div></dt>
+<dd>Reorders the range <span class="d_psymbol"><i>r = [first, last)</i></span> using <span class="d_psymbol"><i>iterSwap</i></span>
+as a swapping primitive such that <span class="d_psymbol"><i>nth</i></span> points to the element that
+would fall there if the range were fully sorted. Effectively, it finds
+the nth smallest (according to <span class="d_psymbol"><i>less</i></span>) element in <span class="d_psymbol"><i>r</i></span>. In
+addition, it also partitions <span class="d_psymbol"><i>r</i></span> such that all elements <span class="d_psymbol"><i>p1</i></span> in
+<span class="d_psymbol"><i>[first, nth)</i></span> satisfy <span class="d_psymbol"><i>less(*p1, *nth)</i></span>, and all
+elements <span class="d_psymbol"><i>p2</i></span> in <span class="d_psymbol"><i>[nth, last)</i></span> satisfy <span class="d_psymbol"><i>!less(*p2,
+nth)</i></span>. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length</i></span><b></i>)</i></b> (if unstable) or <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length *
+log(r.length)</i></span><b></i>)</i></b> (if stable) evaluations of <span class="d_psymbol"><i>less</i></span> and <span class="d_psymbol"><i>iterSwap</i></span>. See also <a href="http://sgi.com/tech/stl/nth_element.html">STL's
+nth_element</a>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] v = [ 25, 7, 9, 2, 0, 5, 21 ];
+<span class="d_keyword">auto</span> n = 4;
+<span class="d_psymbol">topN</span>!(less)(v, begin(v) + n);
+<span class="d_keyword">assert</span>(v[n] == 9);
+<span class="d_comment">// Equivalent form:
+</span><span class="d_psymbol">topN</span>!(<span class="d_string">"a &lt; b"</span>)(v, begin(v) + n);
+<span class="d_keyword">assert</span>(v[n] == 9);
+</pre>
+
+<br><br>
+<span style="color:red">BUGS:</span><br>
+stable <a name="topN"></a><u>topN</u> has not been implemented yet.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="sort"></a><u>sort</u>(alias less,SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,Range)(Range <i>r</i>);
+<br>void <a name="sort"></a><u>sort</u>(string less = "a &lt; b",SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,Range)(Range <i>r</i>);
+</div></dt>
+<dd>Sorts a random-access range according to predicate <span class="d_psymbol"><i>less</i></span>. Performs
+<i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length * log(r.length)</i></span><b></i>)</i></b> (if unstable) or <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length *
+log(r.length) * log(r.length)</i></span><b></i>)</i></b> (if stable) evaluations of <span class="d_psymbol"><i>less</i></span>
+and <span class="d_psymbol"><i>iterSwap</i></span>. See also STL's <a href="http://sgi.com/tech/stl/sort.html"><a name="sort"></a><u>sort</u></a> and <a href="http://sgi.com/tech/stl/stable_sort.html">stable_sort</a>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] array = [ 1, 2, 3, 4 ];
+<span class="d_comment">// sort in descending order
+</span><span class="d_psymbol">sort</span>!(<span class="d_string">"a &gt; b"</span>)(array);
+<span class="d_keyword">assert</span>(array == [ 4, 3, 2, 1 ]);
+<span class="d_comment">// sort in ascending order
+</span><span class="d_psymbol">sort</span>(array);
+<span class="d_keyword">assert</span>(array == [ 1, 2, 3, 4 ]);
+<span class="d_comment">// sort with a delegate
+</span><span class="d_keyword">bool</span> myComp(<span class="d_keyword">int</span> x, <span class="d_keyword">int</span> y) { <span class="d_keyword">return</span> x &gt; y; }
+<span class="d_psymbol">sort</span>!(myComp)(array);
+<span class="d_keyword">assert</span>(array == [ 4, 3, 2, 1 ]);
+<span class="d_comment">// Showcase stable sorting
+</span>string[] words = [ <span class="d_string">"aBc"</span>, <span class="d_string">"a"</span>, <span class="d_string">"abc"</span>, <span class="d_string">"b"</span>, <span class="d_string">"ABC"</span>, <span class="d_string">"c"</span> ];
+<span class="d_psymbol">sort</span>!(<span class="d_string">"toupper(a) &lt; toupper(b)"</span>, SwapStrategy.stable)(words);
+<span class="d_keyword">assert</span>(words == [ <span class="d_string">"a"</span>, <span class="d_string">"aBc"</span>, <span class="d_string">"abc"</span>, <span class="d_string">"ABC"</span>, <span class="d_string">"b"</span>, <span class="d_string">"c"</span> ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="schwartzSort"></a><u>schwartzSort</u>(alias transform,alias less,SwapStrategy ss = SwapStrategy.unstable,Range)(Range <i>r</i>);
+<br>void <a name="schwartzSort"></a><u>schwartzSort</u>(alias transform,string less = "a &lt; b",SwapStrategy ss = SwapStrategy.unstable,Range)(Range <i>r</i>);
+</div></dt>
+<dd>Sorts a range using an algorithm akin to the <a href="http://wikipedia.org/wiki/Schwartzian_transform">Schwartzian transform</a>, also
+known as the decorate-sort-undecorate pattern in Python and Lisp. (Not
+to be confused with <a href="http://youtube.com/watch?v=S25Zf8svHZQ">the other
+Schwartz</a>.) This function is helpful when the sort comparison includes
+an expensive computation. The complexity is the same as that of the
+corresponding <span class="d_psymbol"><i>sort</i></span>, but <span class="d_psymbol"><i><a name="schwartzSort"></a><u>schwartzSort</u></i></span> evaluates <span class="d_psymbol"><i>transform</i></span> only <span class="d_psymbol"><i>r.length</i></span> times (less than half when compared to
+regular sorting). The usage can be best illustrated with an example.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">uint</span> hashFun(string) { ... expensive computation ... }
+string[] array = ...;
+<span class="d_comment">// Sort strings by hash, slow
+</span>sort!(<span class="d_string">"hashFun(a) &lt; hashFun(b)"</span>)(array);
+<span class="d_comment">// Sort strings by hash, fast (only computes arr.length hashes):
+</span><span class="d_psymbol">schwartzSort</span>!(hashFun, <span class="d_string">"a &lt; b"</span>)(array);
+</pre>
+
+The <span class="d_psymbol"><i><a name="schwartzSort"></a><u>schwartzSort</u></i></span> function might require less temporary data and
+be faster than the Perl idiom or the decorate-sort-undecorate idiom
+present in Python and Lisp. This is because sorting is done in-place
+and only minimal extra data (one array of transformed elements) is
+created.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="partialSort"></a><u>partialSort</u>(alias less,SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,Range,It)(Range <i>r</i>, It <i>mid</i>);
+<br>void <a name="partialSort"></a><u>partialSort</u>(string less = "a &lt; b",SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,Range,It)(Range <i>r</i>, It <i>mid</i>);
+</div></dt>
+<dd>Reorders <span class="d_psymbol"><i>r</i></span> such that the range <span class="d_psymbol"><i>begin(r) .. mid</i></span> is the same
+as if <span class="d_psymbol"><i>r</i></span> were sorted, and leaves the range <span class="d_psymbol"><i>mid .. end(r)</i></span> in
+no particular order. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length * log(mid - begin(r))</i></span><b></i>)</i></b>
+evaluations of <span class="d_psymbol"><i>pred</i></span>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 ];
+<span class="d_psymbol">partialSort</span>(a, begin(a) + 5);
+<span class="d_keyword">assert</span>(a[0 .. 5] == [ 0, 1, 2, 3, 4 ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">bool <a name="isSorted"></a><u>isSorted</u>(alias less,Range)(Range <i>r</i>);
+<br>bool <a name="isSorted"></a><u>isSorted</u>(string less = "a &lt; b",Range)(Range <i>r</i>);
+</div></dt>
+<dd>Checks whether a random-access range is sorted according to the
+comparison operation <span class="d_psymbol"><i>less</i></span>. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length</i></span><b></i>)</i></b> evaluations
+of <span class="d_psymbol"><i>less</i></span>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] arr = [4, 3, 2, 1];
+<span class="d_keyword">assert</span>(!<span class="d_psymbol">isSorted</span>(arr));
+sort(arr);
+<span class="d_keyword">assert</span>(<span class="d_psymbol">isSorted</span>(arr));
+sort!(<span class="d_string">"a &gt; b"</span>)(arr);
+<span class="d_keyword">assert</span>(<span class="d_psymbol">isSorted</span>!(<span class="d_string">"a &gt; b"</span>)(arr));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="topNIndex"></a><u>topNIndex</u>(alias less,SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,SRange,TRange)(SRange <i>source</i>, TRange <i>target</i>);
+<br>void <a name="topNIndex"></a><u>topNIndex</u>(string less,SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,SRange,TRange)(SRange <i>source</i>, TRange <i>target</i>);
+</div></dt>
+<dd><a name="topNIndex"></a><u>topNIndex</u>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="partialIndex"></a><u>partialIndex</u>(alias less,SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,SRange,TRange)(SRange <i>source</i>, TRange <i>target</i>);
+<br>void <a name="partialIndex"></a><u>partialIndex</u>(string less,SwapStrategy ss = SwapStrategy.unstable,alias iterSwap = .iterSwap,SRange,TRange)(SRange <i>source</i>, TRange <i>target</i>);
+</div></dt>
+<dd>Computes an index for <span class="d_psymbol"><i>source</i></span> based on the comparison <span class="d_psymbol"><i>less</i></span>
+and deposits the result in <span class="d_psymbol"><i>target</i></span>. It is acceptable that <span class="d_psymbol"><i>target.length &lt; source.length</i></span>, in which case only the smallest <span class="d_psymbol"><i>target.length</i></span> elements in <span class="d_psymbol"><i>source</i></span> get indexed. The target
+provides a sorted "view" into <span class="d_psymbol"><i>source</i></span>. This technique is similar
+to sorting and partial sorting, but it is more flexible because (1) it
+allows "sorting" of invariant collections, (2) allows binary search
+even if the original collection does not offer random access, (3)
+allows multiple indexes, each on a different comparison criterion, (4)
+may be faster when dealing with large objects. However, using an index
+may also be slower under certain circumstances due to the extra
+indirection, and is always larger than a sorting-based solution
+because it needs space for the index in addition to the original
+collection. The complexity is <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>source.length *
+log(target.length)</i></span><b></i>)</i></b>.
+<br><br>
+Two types of indexes are accepted. They are selected by simply passing
+the appropriate <span class="d_psymbol"><i>target</i></span> argument: <ol><li>Indexes of type <span class="d_psymbol"><i>Iterator!(Source)</i></span>, in which case the index will be sorted with the
+predicate <span class="d_psymbol"><i>less(*a, *b)</i></span>;</li> <li>Indexes of an integral type
+(e.g. <span class="d_psymbol"><i>size_t</i></span>), in which case the index will be sorted with the
+predicate <span class="d_psymbol"><i>less(source[a], source[b])</i></span>.</li></ol>
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">invariant</span> arr = [ 2, 3, 1 ];
+<span class="d_keyword">int</span>* index[3];
+<span class="d_psymbol">partialIndex</span>(arr, index);
+<span class="d_keyword">assert</span>(*index[0] == 1 &amp;&amp; *index[1] == 2 &amp;&amp; *index[2] == 3);
+<span class="d_keyword">assert</span>(isSorted!(<span class="d_string">"*a &lt; *b"</span>)(index));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">bool <a name="schwartzIsSorted"></a><u>schwartzIsSorted</u>(alias transform,alias less,Range)(Range <i>r</i>);
+<br>bool <a name="schwartzIsSorted"></a><u>schwartzIsSorted</u>(alias transform,string less = "a &lt; b",Range)(Range <i>r</i>);
+</div></dt>
+<dd>Checks whether a random-access range is sorted according to the
+comparison operation <span class="d_psymbol"><i>less(transform(a), transform(b))</i></span>. Performs
+<i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>less</i></span> and <span class="d_psymbol"><i>transform</i></span>. The
+advantage over <span class="d_psymbol"><i>isSorted</i></span> is that it evaluates <span class="d_psymbol"><i>transform</i></span> only
+half as many times.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] arr = [ <span class="d_string">"ab"</span>, <span class="d_string">"Ab"</span>, <span class="d_string">"aB"</span>, <span class="d_string">"bc"</span>, <span class="d_string">"Bc"</span> ];
+<span class="d_keyword">assert</span>(!<span class="d_psymbol">schwartzIsSorted</span>!(toupper, <span class="d_string">"a &lt; b"</span>)(arr));
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Iterator!(Range) <a name="lowerBound"></a><u>lowerBound</u>(alias less,Range,V)(Range <i>r</i>, V <i>value</i>);
+<br>Iterator!(Range) <a name="lowerBound"></a><u>lowerBound</u>(string less = "a &lt; b",Range,V)(Range <i>r</i>, V <i>value</i>);
+</div></dt>
+<dd>Returns the leftmost position in <span class="d_psymbol"><i>range</i></span> such that all other values
+<span class="d_psymbol"><i>x</i></span> to the left of that position satisfy <span class="d_psymbol"><i>less(x,
+value)</i></span>. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>log(r.length)</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>less</i></span>. See
+also STL's <a href="http://sgi.com/tech/stl/lower_bound.html">lower_bound</a>.
+<br><br>
+<b>Precondition:</b><br>
+<span class="d_psymbol"><i>isSorted!(less)(r)</i></span>
+
+<br><br>
+<b>Returns:</b><br>
+<span class="d_psymbol"><i>i</i></span> such that <span class="d_psymbol"><i>less(*p, i)</i></span> for all p in <span class="d_psymbol"><i>[begin(r), i)</i></span>.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">int</span>[] a = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
+<span class="d_keyword">auto</span> p = <span class="d_psymbol">lowerBound</span>!(less)(a, 4);
+<span class="d_keyword">assert</span>(*p == 4);
+p = <span class="d_psymbol">lowerBound</span>(a, 4); <span class="d_comment">// uses less by default
+</span><span class="d_keyword">assert</span>(*p == 4);
+p = <span class="d_psymbol">lowerBound</span>!(<span class="d_string">"a &lt; b"</span>)(a, 4); <span class="d_comment">// predicate as string
+</span><span class="d_keyword">assert</span>(*p == 4);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Iterator!(Range) <a name="upperBound"></a><u>upperBound</u>(alias less,Range,V)(Range <i>r</i>, V <i>value</i>);
+<br>Iterator!(Range) <a name="upperBound"></a><u>upperBound</u>(string less = "a &lt; b",Range,V)(Range <i>r</i>, V <i>value</i>);
+</div></dt>
+<dd>Returns the rightmost position in <span class="d_psymbol"><i>r</i></span> such that all other elements
+<span class="d_psymbol"><i>x</i></span> to the left of that position satisfy <span class="d_psymbol"><i>!less(value, x)</i></span>.
+Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>log(r.length)</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>less</i></span>. See also
+STL's <a href="http://sgi.com/tech/stl/upper_bound.html">upper_bound</a>.
+<br><br>
+<b>Precondition:</b><br>
+<span class="d_psymbol"><i>isSorted!(less)(r)</i></span>
+
+<br><br>
+<b>Returns:</b><br>
+<span class="d_psymbol"><i>i</i></span> such that <span class="d_psymbol"><i>less(*p, value)</i></span> for all p in <span class="d_psymbol"><i>[begin(r), i)</i></span>.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">auto</span> a = [ 1, 2, 3, 3, 3, 4, 4, 5, 6 ];
+<span class="d_keyword">auto</span> p = <span class="d_psymbol">upperBound</span>(a, 3);
+<span class="d_keyword">assert</span>(p == begin(a) + 5);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">Range <a name="equalRange"></a><u>equalRange</u>(alias less,Range,V)(Range <i>r</i>, V <i>value</i>);
+<br>Range <a name="equalRange"></a><u>equalRange</u>(string less = "a &lt; b",Range,V)(Range <i>r</i>, V <i>value</i>);
+</div></dt>
+<dd>The call <span class="d_psymbol"><i><a name="equalRange"></a><u>equalRange</u>!(less)(r, v)</i></span> returns <span class="d_psymbol"><i>range(<span class="d_psymbol"><i>lowerBound!(less)(r, v), <span class="d_psymbol"><i>upperBound!(less)(r, v)</i></span></i></span>)</i></span> but a bit
+more efficiently than calling both functions.  Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>log(r.length)</i></span><b></i>)</i></b> evaluations of <span class="d_psymbol"><i>less</i></span>. See also STL's <a href="http://sgi.com/tech/stl/equal_range.html">equal_range</a>.
+<br><br>
+<b>Precondition:</b><br>
+<span class="d_psymbol"><i>isSorted!(less)(range)</i></span>
+
+<br><br>
+<b>Returns:</b><br>
+The largest subrange of <span class="d_psymbol"><i>r</i></span> such that for all <span class="d_psymbol"><i>p</i></span> in that range,
+<span class="d_psymbol"><i>!less(*p, value) &amp;&amp; !less(value, *p)</i></span>.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">auto</span> a = [ 1, 2, 3, 3, 3, 4, 4, 5, 6 ];
+<span class="d_keyword">auto</span> r = <span class="d_psymbol">equalRange</span>(a, 3);
+<span class="d_keyword">assert</span>(r == [ 3, 3, 3 ]);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">bool <a name="canFindSorted"></a><u>canFindSorted</u>(alias less,T,V)(T <i>range</i>, V <i>value</i>);
+</div></dt>
+<dd>Returns <span class="d_psymbol"><i><b>true</b></i></span> if and only if <span class="d_psymbol"><i>value</i></span> can be found in <span class="d_psymbol"><i>range</i></span>, which is assumed to be sorted. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>log(r.length)</i></span><b></i>)</i></b>
+evaluations of <span class="d_psymbol"><i>less</i></span>. See also STL's <a href="http://sgi.com/tech/stl/binary_search.html">binary_search</a>.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="makeHeap"></a><u>makeHeap</u>(alias less,alias iterSwap = .iterSwap,Range)(Range <i>r</i>);
+</div></dt>
+<dd>Converts the range <span class="d_psymbol"><i>r</i></span> into a heap. Performs <i><b>&Omicron;</i>(</i></b><span class="d_psymbol"><i>r.length</i></span><b></i>)</i></b>
+evaluations of <span class="d_psymbol"><i>less</i></span>.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="popHeap"></a><u>popHeap</u>(alias less,alias iterSwap = .iterSwap,Range)(Range <i>r</i>);
+</div></dt>
+<dd><a name="popHeap"></a><u>popHeap</u>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="sortHeap"></a><u>sortHeap</u>(alias less,alias iterSwap = .iterSwap,Range)(Range <i>r</i>);
+</div></dt>
+<dd><a name="sortHeap"></a><u>sortHeap</u>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="topNCopy"></a><u>topNCopy</u>(alias less,alias iterSwap = .iterSwap,SRange,TRange)(SRange <i>source</i>, TRange <i>target</i>);
+</div></dt>
+<dd><a name="topNCopy"></a><u>topNCopy</u>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="partialSortCopy"></a><u>partialSortCopy</u>(alias less,alias iterSwap = .iterSwap,SRange,TRange)(SRange <i>source</i>, TRange <i>target</i>);
+</div></dt>
+<dd><a name="partialSortCopy"></a><u>partialSortCopy</u>
+<br><br>
+
+</dd>
+</dl>
+
+    
+<br><br>
+<br><br>
+<!-- Google ad -->
+<script type="text/javascript"><!--
+/**/google_ad_client = "pub-5628673096434613";
+/**/google_ad_width = 728;
+/**/google_ad_height = 90;
+/**/google_ad_format = "728x90_as";
+/**/google_ad_channel ="6203743411";
+/**/google_page_url = document.location;
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+ 
+</div>
+
+
+<div id="copyright">
+Copyright &copy; 1999-2008 by Digital Mars, All Rights Reserved
+ |
+Page generated by <a href="http://www.digitalmars.com/d/2.0/ddoc.html">Ddoc</a>.
+</div>
+
+</body>
+</html>
+

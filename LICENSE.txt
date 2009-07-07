@@ -1,0 +1,14 @@
+Licensing:
+
+    There is none, you may use this code and/or
+
+    program for whatever you want.  Although I 
+
+    must ask that if you distribute the source
+
+    that you give credit to me (Stephen Akiki)
+
+    as well as link to my website:
+		 (http://akiscode.com) 
+
+

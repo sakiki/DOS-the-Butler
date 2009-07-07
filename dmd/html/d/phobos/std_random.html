@@ -1,0 +1,626 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<!--
+	Copyright (c) 1999-2008 by Digital Mars
+	All Rights Reserved
+	Written by Walter Bright
+	www.digitalmars.com
+  -->
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" >
+<title>std.random - D Programming Language - Digital Mars</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script>
+function listanchors()
+{
+    var a = document.getElementById("quickindex");
+    if (!a) return;
+    var newText = "";
+    var hash = new Array;
+    // List all anchors.
+    for (var i = 0; i < document.anchors.length; i++)
+    {
+        var a = document.anchors[i];
+        var text = a.name;
+        if (hash[text] > 0) continue;
+        hash[text] = 1;
+        newText += '<a href="#' + a.name + '"><span class="d_psymbol">'
+                + a.name + '</span></a> ';
+    }
+    if (newText != "") newText = "<p><b>Jump to:</b> " + newText + '</p>';
+    var a = document.getElementById("quickindex");
+    a.innerHTML = newText;
+}
+</script>
+
+</head>
+
+<body onload="listanchors()">
+<div id="heading">
+	<a href="http://www.digitalmars.com/"><img src="../dmlogo.gif" width="270" height="53" border="0" alt="www.digitalmars.com" align="left"></a>
+	<p align="right">D Programming Language 2.0</p>
+
+
+	<div id="headingNav">
+	<ul>	<li><a href="http://www.prowiki.org/wiki4d/wiki.cgi?DocComments/Phobos/StdRandom" title="Read/write comments and feedback">Comments</a></li>
+	<li><a href="../index.html" title="D Programming Language" class="dlink">D</a></li>
+	<li><a href="http://www.digitalmars.com/advancedsearch.html" title="Search Digital Mars web site">Search</a></li>
+	<li><a href="http://www.digitalmars.com/" title="www.digitalmars.com">Home</a></li>
+	</ul>
+	</div>
+
+	<div id="lastupdate">Last update Thu Mar  6 15:45:38 2008
+</div>
+</div>
+
+
+
+<div id="navigation">
+    
+<div class="navblock">
+<form method="get" action="http://www.google.com/search">
+<div id="searchbox">
+<input id="q" name="q" size="10" value="RTL Search" onFocus='if(this.value == "RTL Search"){this.value="";}'>
+<input type="hidden" id="domains" name="domains" value="www.digitalmars.com">
+<input type="hidden" id="sitesearch" name="sitesearch" value="www.digitalmars.com/d/2.0/phobos">
+<input type="hidden" id="sourceid" name="sourceid" value="google-search">
+<input type="submit" id="submit" name="submit" value="Go">
+</div>
+</form>
+<div id="toctop">
+    <ul>	<li><a href="../index.html" title="D Programming Language">D</a></li>
+	<li><a href="../lex.html" title="D Language Specification">Language</a></li>
+	<li><a href="phobos.html" title="D Runtime Library">Phobos</a></li>
+	<li><a href="../comparison.html" title="Language Comparisons">Comparisons</a></li>
+    </ul>
+</div>
+</div>
+
+    
+<div class="navblock">
+    <ul>	<li><a href="object.html" title="root of object hierarchy">object</a></li>
+    </ul>
+    <h2><a href="phobos.html#std" title="D standard modules">std</a></h2>
+    <ul>	<li><a href="std_algorithm.html" title="General-purpose algorithms">std.algorithm</a></li>
+	<li><a href="std_base64.html" title="Encode/decode base64 format">std.base64</a></li>
+	<li><a href="std_bind.html" title="Function argument binding">std.bind</a></li>
+	<li><a href="std_bitarray.html" title="Arrays of bits">std.bitarray</a></li>
+	<li><a href="std_bitmanip.html" title="Bit-level manipulation">std.bitmanip</a></li>
+	<li><a href="std_boxer.html" title="Box/unbox types">std.boxer</a></li>
+	<li><a href="std_compiler.html" title="Information about the D compiler implementation">std.compiler</a></li>
+	<li><a href="std_complex.html" title="Complex numbers">std.complex</a></li>
+	<li><a href="std_contracts.html" title="Think assert">std.contracts</a></li>
+	<li><a href="std_conv.html" title="Conversion of strings to integers">std.conv</a></li>
+	<li><a href="std_cover.html" title="D coverage analyzer">std.cover</a></li>
+	<li><a href="std_cpuid.html" title="CPU identification">std.cpuid</a></li>
+	<li><a href="std_ctype.html" title="Simple character classification">std.ctype</a></li>
+	<li><a href="std_date.html" title="Date and time functions">std.date</a></li>
+	<li><a href="std_demangle.html" title="Demangle D names">std.demangle</a></li>
+	<li><a href="std_file.html" title="Basic file operations">std.file</a></li>
+	<li><a href="std_format.html" title="Formatted conversions of values to strings">std.format</a></li>
+	<li><a href="std_functional.html" title="functional">std.functional</a></li>
+	<li><a href="std_gc.html" title="Control the garbage collector">std.gc</a></li>
+	<li><a href="std_getopt.html" title="Command line options">std.getopt</a></li>
+	<li><a href="std_intrinsic.html" title="Compiler built in intrinsic functions">std.intrinsic</a></li>
+	<li><a href="std_iterator.html" title="Defines iterators and ranges">std.iterator</a></li>
+	<li><a href="std_math.html" title="the usual math functions">std.math</a></li>
+	<li><a href="std_md5.html" title="Compute MD5 digests">std.md5</a></li>
+	<li><a href="std_metastrings.html" title="Metaprogramming with strings">std.metastrings</a></li>
+	<li><a href="std_mmfile.html" title="Memory mapped files">std.mmfile</a></li>
+	<li><a href="std_numeric.html" title="Numeric algorithms">std.numeric</a></li>
+	<li><a href="std_openrj.html" title="Basic database">std.openrj</a></li>
+	<li><a href="std_outbuffer.html" title="Assemble data into an array of bytes">std.outbuffer</a></li>
+	<li><a href="std_outofmemory.html" title="Out of memory exception">std.outofmemory</a></li>
+	<li><a href="std_path.html" title="Manipulate file names, path names, etc.">std.path</a></li>
+	<li><a href="std_process.html" title="Create/destroy threads">std.process</a></li>
+	<li><a href="std_random.html" title="Random number generation">std.random</a></li>
+	<li><a href="std_regexp.html" title="regular expressions">std.regexp</a></li>
+	<li><a href="std_signals.html" title="Signals">std.signals</a></li>
+	<li><a href="std_socket.html" title="Sockets">std.socket</a></li>
+	<li><a href="std_socketstream.html" title="Stream for a blocking, connected Socket">std.socketstream</a></li>
+	<li><a href="std_stdint.html" title="Integral types for various purposes">std.stdint</a></li>
+	<li><a href="std_stdio.html" title="Standard I/O">std.stdio</a></li>
+	<li><a href="std_cstream.html" title="Stream I/O">std.cstream</a></li>
+	<li><a href="std_stream.html" title="Stream I/O">std.stream</a></li>
+	<li><a href="std_string.html" title="Basic string operations">std.string</a></li>
+	<li><a href="std_system.html" title="Inquire about the CPU, operating system">std.system</a></li>
+	<li><a href="std_thread.html" title="Thread operations">std.thread</a></li>
+	<li><a href="std_traits.html" title="Type traits">std.traits</a></li>
+	<li><a href="std_typecons.html" title="Type constructors">std.typecons</a></li>
+	<li><a href="std_typetuple.html" title="Type tuples">std.typetuple</a></li>
+	<li><a href="std_uni.html" title="Unicode classification">std.uni</a></li>
+	<li><a href="std_uri.html" title="Encode and decode Uniform Resource Identifiers (URIs)">std.uri</a></li>
+	<li><a href="std_utf.html" title="Encode and decode utf character encodings">std.utf</a></li>
+	<li><a href="std_variant.html" title="Stores all types in a uniform, dynamically-checked representation">std.variant</a></li>
+	<li><a href="std_xml.html" title="XML file processing">std.xml</a></li>
+	<li><a href="std_zip.html" title="Read/write zip archives">std.zip</a></li>
+	<li><a href="std_zlib.html" title="Compression / Decompression of data">std.zlib</a></li>
+	<li><a href="std_c_fenv.html" title="Floating point environment">std.c.fenv</a></li>
+	<li><a href="std_c_locale.html" title="Locale">std.c.locale</a></li>
+	<li><a href="std_c_math.html" title="Math">std.c.math</a></li>
+	<li><a href="std_c_process.html" title="Process">std.c.process</a></li>
+	<li><a href="std_c_stdarg.html" title="Variadic arguments">std.c.stdarg</a></li>
+	<li><a href="std_c_stddef.html" title="Standard definitions">std.c.stddef</a></li>
+	<li><a href="std_c_stdio.html" title="Standard I/O">std.c.stdio</a></li>
+	<li><a href="std_c_stdlib.html" title="Standard library">std.c.stdlib</a></li>
+	<li><a href="std_c_string.html" title="Strings">std.c.string</a></li>
+	<li><a href="std_c_time.html" title="Time">std.c.time</a></li>
+	<li><a href="std_c_wcharh.html" title="Wide characters">std.c.wcharh</a></li>
+	<li><a href="std_windows_charset.html" title="Conversion to/from Windows character sets">std.windows.charset</a></li>
+	<li><a href="phobos.html#std_windows" title="Modules specific to Windows">std.windows</a></li>
+	<li><a href="phobos.html#std_linux" title="Modules specific to Windows">std.linux</a></li>
+	<li><a href="phobos.html#std_c_windows" title="C Windows API">std.c.windows</a></li>
+	<li><a href="phobos.html#std_c_linux" title="C Linux API">std.c.linux</a></li>
+    </ul>
+</div>
+
+</div>
+<div id="content">
+    <h1>std.random</h1>
+    <div id=quickindex class=quickindex></div>
+    <!-- Generated by Ddoc from std\random.d -->
+Facilities for <a name="random"></a><u>random</u> number generation. The old-style functions
+   <span class="d_param">rand_seed</span> and <span class="d_param">rand</span> will soon be deprecated as
+   they rely on global state and as such are subjected to various
+   thread-related issues.
+<br><br>
+The new-style generator objects hold their own state so they are
+   immune of threading issues. The generators feature a number of
+   well-known and well-documented methods of generating <a name="random"></a><u>random</u>
+   numbers. An overall fast and reliable means to generate <a name="random"></a><u>random</u>
+   numbers is the <span class="d_param">Mt19937</span> generator, which derives its name
+   from "<a href="http://math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">   Mersenne Twister</a> with a period of 2 to the power of 19937". In
+   memory-constrained situations,
+   <a href="http://en.wikipedia.org/wiki/Linear_congruential_generator">   linear congruential</a> generators such as MinstdRand0 and MinstdRand
+   might be useful. The standard library provides an alias <span class="d_param">  Random</span> for whichever generator it finds the most fit for the
+   target environment.
+
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code">Random gen;
+<span class="d_comment">// Generate a uniformly-distributed integer in the range [0, 15]
+</span><span class="d_keyword">auto</span> i = uniform!(<span class="d_keyword">int</span>)(gen, 0, 15);
+<span class="d_comment">// Generate a uniformly-distributed real in the range [0, 100)
+</span><span class="d_keyword">auto</span> r = uniform!(<span class="d_keyword">real</span>)(gen, 0.0L, 100.0L);
+</pre>
+
+In addition to <a name="random"></a><u>random</u> number generators, this module features
+distributions, which skew a generator's output statistical
+distribution in various ways. So far the uniform distribution for
+integers and real numbers have been implemented.
+
+<br><br>
+<b>Author:</b><br>
+<a href="http://erdani.org">Andrei Alexandrescu</a>
+
+<br><br>
+<b>Credits:</b><br>
+The entire <a name="random"></a><u>random</u> number library architecture is derived from the
+excellent
+<a href="http://open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2461.pdf">C++0X</a> <a name="random"></a><u>random</u> number facility proposed by Jens Maurer and contrinuted
+to by researchers at the Fermi laboratory.
+
+<br><br>
+
+<dl><dt><div class="d_decl">struct <a name="LinearCongruentialEngine"></a><u>LinearCongruentialEngine</u>(UIntType,UIntType a,UIntType c,UIntType m);
+</div></dt>
+<dd>Linear Congruential generator.
+<br><br>
+
+<dl><dt><div class="d_decl">alias <a name="ResultType"></a><u>ResultType</u>;
+</div></dt>
+<dd>Alias for the generated type <span class="d_param">UIntType</span>.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">bool <a name="hasFixedRange"></a><u>hasFixedRange</u>;
+</div></dt>
+<dd>Does this generator have a fixed range? (<span class="d_param"><b>true</b></span>).
+<br><br>
+
+</dd>
+<dt><div class="d_decl">ResultType <a name="min"></a><u>min</u>;
+</div></dt>
+<dd>Lowest generated value.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">ResultType <a name="max"></a><u>max</u>;
+</div></dt>
+<dd>Highest generated value.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="multiplier"></a><u>multiplier</u>;
+</div></dt>
+<dd>The parameters of this distribution. The random number is <span class="d_param">x =
+        (x * a + c) % m</span>.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="increment"></a><u>increment</u>;
+</div></dt>
+<dd>The parameters of this distribution. The random number is <span class="d_param">x =
+        (x * a + c) % m</span>.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="modulus"></a><u>modulus</u>;
+</div></dt>
+<dd>The parameters of this distribution. The random number is <span class="d_param">x =
+        (x * a + c) % m</span>.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">LinearCongruentialEngine <a name="opCall"></a><u>opCall</u>(UIntType <i>x0</i> = 1);
+</div></dt>
+<dd>Constructs a <span class="d_param">LinearCongruentialEngine</span> generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="seed"></a><u>seed</u>(UIntType <i>x0</i> = 1);
+</div></dt>
+<dd>(Re)seeds the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="next"></a><u>next</u>();
+</div></dt>
+<dd>Returns the <a name="next"></a><u>next</u> number in the random sequence.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="discard"></a><u>discard</u>(ulong <i>n</i>);
+</div></dt>
+<dd>Discards next <span class="d_param"><i>n</i></span> samples.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">bool <a name="opEquals"></a><u>opEquals</u>(LinearCongruentialEngine <i>rhs</i>);
+</div></dt>
+<dd>Compares against <span class="d_param"><i>rhs</i></span> for equality.
+<br><br>
+
+</dd>
+</dl>
+</dd>
+<dt><div class="d_decl">alias <a name="MinstdRand0"></a><u>MinstdRand0</u>;
+<br>alias <a name="MinstdRand"></a><u>MinstdRand</u>;
+</div></dt>
+<dd>Define <span class="d_param">LinearCongruentialEngine</span> generators with "good"
+   parameters.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code">   <span class="d_comment">// seed with a constant
+</span>   <span class="d_keyword">auto</span> rnd0 = <span class="d_psymbol">MinstdRand0</span>(1);
+   <span class="d_keyword">auto</span> n = rnd0.next; <span class="d_comment">// same for each run
+</span>   <span class="d_comment">// Seed with an unpredictable value
+</span>   rnd0.seed(unpredictableSeed);
+   n = rnd0.next; <span class="d_comment">// different across runs
+</span></pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">struct <a name="MersenneTwisterEngine"></a><u>MersenneTwisterEngine</u>(UIntType,size_t w,size_t n,size_t m,size_t r,UIntType a,size_t u,size_t s,UIntType b,size_t t,UIntType c,size_t l);
+</div></dt>
+<dd>The <a href="http://math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">   Mersenne Twister generator</a>.
+<br><br>
+
+<dl><dt><div class="d_decl">alias <a name="ResultType"></a><u>ResultType</u>;
+</div></dt>
+<dd>Result type (an alias for <span class="d_param">UIntType</span>).
+<br><br>
+
+</dd>
+<dt><div class="d_decl">size_t <a name="wordSize"></a><u>wordSize</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">size_t <a name="stateSize"></a><u>stateSize</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">size_t <a name="shiftSize"></a><u>shiftSize</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">size_t <a name="maskBits"></a><u>maskBits</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="xorMask"></a><u>xorMask</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="temperingU"></a><u>temperingU</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">size_t <a name="temperingS"></a><u>temperingS</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="temperingB"></a><u>temperingB</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">size_t <a name="temperingT"></a><u>temperingT</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="temperingC"></a><u>temperingC</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">size_t <a name="temperingL"></a><u>temperingL</u>;
+</div></dt>
+<dd>Parameter for the generator.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="min"></a><u>min</u>;
+</div></dt>
+<dd>Smallest generated value (0).
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="max"></a><u>max</u>;
+</div></dt>
+<dd>Largest generated value.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">UIntType <a name="defaultSeed"></a><u>defaultSeed</u>;
+</div></dt>
+<dd>The default seed value.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">MersenneTwisterEngine <a name="opCall"></a><u>opCall</u>(ResultType <i>value</i>);
+</div></dt>
+<dd>Constructs a MersenneTwisterEngine object
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="seed"></a><u>seed</u>(ResultType <i>value</i> = defaultSeed);
+</div></dt>
+<dd>Constructs a MersenneTwisterEngine object
+<br><br>
+
+</dd>
+<dt><div class="d_decl">uint <a name="next"></a><u>next</u>();
+</div></dt>
+<dd>Returns the <a name="next"></a><u>next</u> random value.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="discard"></a><u>discard</u>(ulong <i>n</i>);
+</div></dt>
+<dd>Discards next <span class="d_param"><i>n</i></span> samples.
+<br><br>
+
+</dd>
+</dl>
+</dd>
+<dt><div class="d_decl">alias <a name="Mt19937"></a><u>Mt19937</u>;
+</div></dt>
+<dd>A <span class="d_param">MersenneTwisterEngine</span> instantiated with the parameters
+   of the original engine
+   <a href="http://math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">MT19937</a>,
+   generating uniformly-distributed 32-bit numbers with a period of 2
+   to the power of 19937. Recommended for random number generation
+   unless memory is severely restricted, in which case a <span class="d_param">  LinearCongruentialEngine</span> would be the generator of choice.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code">   <span class="d_comment">// seed with a constant
+</span>   <span class="d_psymbol">Mt19937</span> gen;
+   <span class="d_keyword">auto</span> n = gen.next; <span class="d_comment">// same for each run
+</span>   <span class="d_comment">// Seed with an unpredictable value
+</span>   gen.seed(unpredictableSeed);
+   n = gen.next; <span class="d_comment">// different across runs
+</span></pre>
+ 
+<br><br>
+
+</dd>
+<dt><div class="d_decl">alias <a name="Random"></a><u>Random</u>;
+</div></dt>
+<dd>The "default", "favorite", "suggested" random number generator on
+   the current platform. It is a typedef for one of the
+   previously-defined generators. You may want to use it if (1) you
+   need to generate some nice random numbers, and (2) you don't care
+   for the minutiae of the method being used.
+ 
+<br><br>
+
+</dd>
+<dt><div class="d_decl">uint <a name="unpredictableSeed"></a><u>unpredictableSeed</u>();
+</div></dt>
+<dd>A "good" seed for initializing random number engines. Initializing
+   with <span class="d_param"><a name="unpredictableSeed"></a><u>unpredictableSeed</u></span> makes engines generate different
+   random number sequences every run.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">auto</span> rnd = Random(<span class="d_psymbol">unpredictableSeed</span>);
+<span class="d_keyword">auto</span> n = rnd.next;
+...
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">struct <a name="UniformDistribution"></a><u>UniformDistribution</u>(NumberType,string boundaries = "[)"</div></dt>;
+</dl>
+<dd>Generates uniformly-distributed numbers within a range using an
+   external generator. The <span class="d_param">boundaries</span> parameter controls
+   the shape of the interval (open vs. closed on either side). Valid
+   values for <span class="d_psymbol"><i>boundaries</i></span> are "[]", "(]", "[)", and "()". The
+   default interval is [a, b).
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code"><span class="d_keyword">auto</span> a = <span class="d_keyword">new</span> <span class="d_keyword">double</span>[20];
+Random gen;
+<span class="d_keyword">auto</span> rndIndex = <span class="d_psymbol">UniformDistribution</span>!(<span class="d_keyword">uint</span>)(0, a.length);
+<span class="d_keyword">auto</span> rndValue = <span class="d_psymbol">UniformDistribution</span>!(<span class="d_keyword">double</span>)(0, 1);
+<span class="d_comment">// Get a random index into the array
+</span><span class="d_keyword">auto</span> i = rndIndex.next(gen);
+<span class="d_comment">// Get a random probability, i.e., a real number in [0, 1)
+</span><span class="d_keyword">auto</span> p = rndValue.next(gen);
+<span class="d_comment">// Assign that value to that array element
+</span>a[i] = p;
+<span class="d_keyword">auto</span> digits = <span class="d_psymbol">UniformDistribution</span>!(<span class="d_keyword">char</span>, <span class="d_string">"[]"</span>)('0', '9');
+<span class="d_keyword">auto</span> percentages = <span class="d_psymbol">UniformDistribution</span>!(<span class="d_keyword">double</span>, <span class="d_string">"(]"</span>)(0.0, 100.0);
+<span class="d_comment">// Get a digit in ['0', '9']
+</span><span class="d_keyword">auto</span> digit = digits.next(gen);
+<span class="d_comment">// Get a number in (0.0, 100.0]
+</span><span class="d_keyword">auto</span> p = percentages.next(gen);
+</pre>
+<br><br>
+
+<dl><dt><div class="d_decl">UniformDistribution <a name="opCall"></a><u>opCall</u>(NumberType <i>a</i>, NumberType <i>b</i>);
+</div></dt>
+<dd>Constructs <i>a</i> <span class="d_param">UniformDistribution</span> able to generate
+   numbers in the interval [<span class="d_param">min</span>, <span class="d_param">max</span><br><br> if
+   <span class="d_param">closedRight</span> is <span class="d_param"><b>false</b></span>.
+
+</dd>
+</dl>
+<dt><div class="d_decl">ResultType <a name="a"></a><u>a</u>();
+</div></dt>
+<dd>Returns the smallest random value generated.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">ResultType <a name="b"></a><u>b</u>();
+</div></dt>
+<dd>Returns the largest random value generated.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="reset"></a><u>reset</u>();
+</div></dt>
+<dd>Does nothing (provided for conformity with other distributions).
+<br><br>
+
+</dd>
+<dt><div class="d_decl">template <a name="next"></a><u>next</u>(UniformRandomNumberGenerator)</div></dt>
+<dd>Returns a random number using <span class="d_param">  UniformRandomNumberGenerator</span> as back-end.
+<br><br>
+
+<dl><dt><div class="d_decl">ResultType <a name="next"></a><u>next</u>(ref UniformRandomNumberGenerator <i>urng</i>);
+</div></dt>
+<dd>Returns a random number using <span class="d_param">  UniformRandomNumberGenerator</span> as back-end.
+<br><br>
+
+</dd>
+</dl>
+</dd>
+</dd>
+)
+<dt><div class="d_decl">T1 <a name="uniform"></a><u>uniform</u>(T1,string boundaries = "[)",UniformRandomNumberGenerator,T2</div></dt>(ref UniformRandomNumberGenerator <i>gen</i>, T1 <i>a</i>, T2 <i>b</i>);
+)
+<dd>Convenience function that generates a number in an interval by
+   forwarding to <span class="d_param">UniformDistribution!(T, leftLim,
+   rightLim)(a, b).next</span>.
+<br><br>
+<b>Example:</b><br>
+<pre class="d_code">Random gen(unpredictableSeed);
+<span class="d_comment">// Generate an integer in [0, 1024)
+</span><span class="d_keyword">auto</span> a = <span class="d_psymbol">uniform</span>(gen, 0, 1024);
+<span class="d_comment">// Generate a float in [0, 1)
+</span><span class="d_keyword">auto</span> a = <span class="d_psymbol">uniform</span>(gen, 0.0f, 1.0f);
+</pre>
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="randomShuffle"></a><u>randomShuffle</u>(T,SomeRandomGen)(T[] <i>array</i>, ref SomeRandomGen <i>r</i>);
+</div></dt>
+<dd>Shuffles elements of <span class="d_param">array</span> using <span class="d_param">r</span> as a
+   shuffler.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">void <a name="rand_seed"></a><u>rand_seed</u>(uint <i>seed</i>, uint <i>index</i>);
+</div></dt>
+<dd>The random number generator is seeded at program startup with a random value.
+ This ensures that each program generates a different sequence of random
+ numbers. To generate a repeatable sequence, use <a name="rand_seed"></a><u>rand_seed</u>() to start the
+ sequence. <i>seed</i> and <i>index</i> start it, and each successive value increments <i>index</i>.
+ This means that the <i>n</i>th random number of the sequence can be directly
+ generated
+ by passing <i>index</i> + <i>n</i> to <a name="rand_seed"></a><u>rand_seed</u>().
+<br><br>
+<b>Note:</b><br>
+This is more random, but slower, than C's rand() function.
+ To use C's rand() instead, import std.c.stdlib.
+
+<br><br>
+<span style="color:red">BUGS:</span><br>
+Shares a global single state, not multithreaded.
+ SCHEDULED FOR DEPRECATION.
+<br><br>
+
+</dd>
+<dt><div class="d_decl">uint <a name="rand"></a><u>rand</u>();
+</div></dt>
+<dd>Get the next random number in sequence.
+<br><br>
+<span style="color:red">BUGS:</span><br>
+Shares a global single state, not multithreaded.
+ SCHEDULED FOR DEPRECATION.
+ 
+<br><br>
+
+</dd>
+)
+
+    
+<br><br>
+<br><br>
+<!-- Google ad -->
+<script type="text/javascript"><!--
+/**/google_ad_client = "pub-5628673096434613";
+/**/google_ad_width = 728;
+/**/google_ad_height = 90;
+/**/google_ad_format = "728x90_as";
+/**/google_ad_channel ="6203743411";
+/**/google_page_url = document.location;
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+ 
+</div>
+
+
+<div id="copyright">
+Copyright &copy; 1999-2008 by Digital Mars, All Rights Reserved
+ |
+Page generated by <a href="http://www.digitalmars.com/d/2.0/ddoc.html">Ddoc</a>.
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,31 @@
+#OS Windows
+#TITLE DOS The Butler
+
+#PROCESS 1
+
+#COLOR black btwhite
+
+#SYMBOL <<TAB>> \t
+
+#START
+
+#CLRSCR
+#TEXT Hello I am DOS The Butler
+#TEXT How may I help you?
+#TEXT ----------------------------
+
+-> 1 - Start Internet Explorer - system("start iexplore"); - IE
+
+=> <<TAB>> - Opens favorites menu - favorites
+    #CLRSCR
+    #TEXT     Favorites
+    #TEXT -----------------
+    	 
+    -> 1 - Google - system("start http://www.google.com"); - NONE
+    -> 2 - Yahoo - system("start http://www.yahoo.com"); - NONE
+    
+<=
+    
+-> 0 - Quit - EXIT = 1; - NONE
+
+#END
